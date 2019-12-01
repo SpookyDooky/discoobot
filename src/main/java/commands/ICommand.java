@@ -4,4 +4,5 @@ public interface ICommand {
 
     void execute();
     void help();
+    String getCommandName();
 }
