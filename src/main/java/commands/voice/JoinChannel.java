@@ -2,6 +2,7 @@ package commands.voice;
 
 import commands.CommandContext;
 import commands.ICommand;
+import core.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -15,7 +16,8 @@ public class JoinChannel implements ICommand {
         Guild guild = event.getGuild();
         AudioManager audioManager = guild.getAudioManager();
 
-        audioManager.openAudioConnection(channelVoice);
+        Bot.getInstance().getVoiceManager().connectTo(channelVoice,audioManager);
+        context.getChannel().sendMessage("Connecting to channel: " + context.getChannel().getName()).queue();
     }
 
     public void help() {

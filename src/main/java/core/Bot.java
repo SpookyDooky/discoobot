@@ -12,16 +12,22 @@ public class Bot {
     ArrayList<CommandDetails> commandDetailsList;
 
     private static Bot instance;
+    private static VoiceManager voiceManager;
 
     public Bot(){
         this.commandList = new ArrayList<ICommand>();
         this.commandDetailsList = new ArrayList<CommandDetails>();
+        this.voiceManager = new VoiceManager(3);
 
         this.instance = this;
     }
 
     public static Bot getInstance(){
         return instance;
+    }
+
+    public VoiceManager getVoiceManager(){
+        return voiceManager;
     }
 
     public void addCommand(ICommand theCommand, CommandDetails info){
