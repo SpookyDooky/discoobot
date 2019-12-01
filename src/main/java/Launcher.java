@@ -5,7 +5,7 @@ public class Launcher {
     private static JDA jda;
 
     public static void main(String[] args){
-        String token = "pls";
+        String token = "plsd";
 
         try{
             jda = new JDABuilder(token).build();
