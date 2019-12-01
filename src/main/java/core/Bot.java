@@ -26,8 +26,4 @@ public class Bot {
         commandList.add(theCommand);
         commandDetailsList.add(info);
     }
-
-    public void test(){
-        System.out.println(commandList.size());
-    }
 }

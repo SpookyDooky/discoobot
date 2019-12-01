@@ -14,5 +14,10 @@ public class CommandHandlerBot {
 
     public static void handleCommand(GuildMessageReceivedEvent event){
         CommandContext context = new CommandContext(event);
+        System.out.println("DETECTED");
+        String command = context.getMessage();
+        if(command.charAt(0) == 33 && command.charAt(1) == 33){
+            System.out.println("DETECTED");
+        }
     }
 }

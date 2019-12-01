@@ -7,6 +7,6 @@ public class EventListenerBot extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
-
+        CommandHandlerBot.handleCommand(event);
     }
 }
