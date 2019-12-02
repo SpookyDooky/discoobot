@@ -16,7 +16,11 @@ import java.util.ArrayList;
 
 public class Clip implements ICommand {
 
+    private CommandContext context;
+
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
+        this.context = context;
+
         if(parameters == null){
             //Take 5 secs
             byte[] data = getFinal(Bot.getInstance().getVoiceManager().getPCM_Stream(5));
@@ -31,14 +35,19 @@ public class Clip implements ICommand {
                 context.getChannel().sendMessage("Please make sure that the first argument is a number");
             }
         }
+
     }
 
     private boolean getWavFile(byte[] PCM_Data){
         boolean result = false;
         try{
-            File outputFile = new File("src/main/resources/result.wav");
+            File outputFileWave = new File("src/main/resources/result.wav");
             AudioFormat format = new AudioFormat(48000,16,2,true,true);
-            AudioSystem.write(new AudioInputStream(new ByteArrayInputStream(PCM_Data), format,PCM_Data.length), AudioFileFormat.Type.WAVE,outputFile);
+            AudioSystem.write(new AudioInputStream(new ByteArrayInputStream(PCM_Data), format,PCM_Data.length), AudioFileFormat.Type.WAVE,outputFileWave);
+
+            this.context.getChannel().sendFile(outputFileWave).queue();
+            File outputZip = new File("src/main/resources/resultzip.zip");
+
             result = true;
         } catch(Exception e){
             e.printStackTrace();

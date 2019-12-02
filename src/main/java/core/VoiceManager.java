@@ -9,9 +9,7 @@ import net.dv8tion.jda.api.managers.AudioManager;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
@@ -19,13 +17,13 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
     private int connections;
     private AudioManager manager;
 
-    private Queue<byte[]> history;
+    private Deque<byte[]> history;
     private int mins;
     private int stuffed;
 
     public VoiceManager(int mins){
         this.connections = 0;
-        this.history = new ConcurrentLinkedQueue<byte[]>();
+        this.history = new ArrayDeque<byte[]>();
         this.mins = mins;
         this.stuffed = 0;
         this.manager = null;
@@ -48,10 +46,10 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
         byte[] data = audio.getAudioData(1.0f);
 
         if(this.history.size() >= mins * 50 * 60 + 50){
-            this.history.poll();
-            this.history.offer(data);
+            this.history.pollLast();
+            this.history.offerFirst(data);
         } else {
-            this.history.offer(data);
+            this.history.offerFirst(data);
         }
     }
 
@@ -92,7 +90,8 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
 
         ArrayList<Byte> finalResult = new ArrayList<Byte>();
         int index = 0;
-        for(int x = 0;x < result.size();x++){
+
+        for(int x = result.size() - 1;x >= 0 ;x--){
             for(int y = 0; y < result.get(x).length;y++){
                 finalResult.add(result.get(x)[y]);
             }
