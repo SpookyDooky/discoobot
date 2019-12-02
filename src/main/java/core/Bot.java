@@ -17,9 +17,8 @@ public class Bot {
     public Bot(){
         this.commandList = new ArrayList<ICommand>();
         this.commandDetailsList = new ArrayList<CommandDetails>();
-        this.voiceManager = new VoiceManager(3);
-
-        this.instance = this;
+        voiceManager = new VoiceManager(3);
+        instance = this;
     }
 
     public static Bot getInstance(){

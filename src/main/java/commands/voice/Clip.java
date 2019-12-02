@@ -24,7 +24,7 @@ public class Clip implements ICommand {
 
         if(parameters == null){
             //Take 5 secs
-            byte[] data = getFinal(Bot.getInstance().getVoiceManager().getPCM_Stream(5));
+            byte[] data = getFinal(Bot.getInstance().getVoiceManager().getPCM_Stream(15));
             getWavFile(data);
         } else {
             try{
