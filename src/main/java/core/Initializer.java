@@ -1,9 +1,8 @@
 package core;
 
 import commands.CommandDetails;
-import commands.voice.Clip;
-import commands.voice.JoinChannel;
-import commands.voice.LeaveChannel;
+import commands.voice.*;
+import commands.misc.*;
 
 public class Initializer {
 
@@ -16,6 +15,7 @@ public class Initializer {
     }
 
     private static void initCommands(){
+        //Voice commands
         CommandDetails joinChannelDetails = new CommandDetails(0,0,false,false);
         instance.addCommand(new JoinChannel(),joinChannelDetails);
 
@@ -24,6 +24,10 @@ public class Initializer {
 
         CommandDetails clipDetails = new CommandDetails(0,1,false,true);
         instance.addCommand(new Clip(), clipDetails);
+
+        //Misc commands
+        CommandDetails chooseDetails = new CommandDetails(1,100, true, true);
+        instance.addCommand(new Choose(),chooseDetails);
     }
 
 }

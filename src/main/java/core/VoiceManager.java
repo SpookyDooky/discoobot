@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.nio.ByteBuffer;
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
 
@@ -88,7 +87,7 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
             result.add(iterator.next());
         }
 
-        ArrayList<Byte> finalResult = new ArrayList<Byte>();
+        ArrayList<Byte> finalResult = new ArrayList<>();
         int index = 0;
 
         for(int x = result.size() - 1;x >= 0 ;x--){

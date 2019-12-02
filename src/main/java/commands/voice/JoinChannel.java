@@ -17,7 +17,7 @@ public class JoinChannel implements ICommand {
         AudioManager audioManager = guild.getAudioManager();
 
         Bot.getInstance().getVoiceManager().connectTo(channelVoice,audioManager);
-        context.getChannel().sendMessage("Connecting to channel: " + context.getChannel().getName()).queue();
+        context.getChannel().sendMessage("Connecting to channel: " + channelVoice.getName()).queue();
     }
 
     public void help() {

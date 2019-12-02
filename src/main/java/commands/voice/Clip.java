@@ -46,6 +46,7 @@ public class Clip implements ICommand {
             AudioSystem.write(new AudioInputStream(new ByteArrayInputStream(PCM_Data), format,PCM_Data.length), AudioFileFormat.Type.WAVE,outputFileWave);
 
             this.context.getChannel().sendFile(outputFileWave).queue();
+            outputFileWave.deleteOnExit();
             File outputZip = new File("src/main/resources/resultzip.zip");
 
             result = true;
