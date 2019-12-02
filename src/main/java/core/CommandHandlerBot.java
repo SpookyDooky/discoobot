@@ -42,7 +42,12 @@ public class CommandHandlerBot {
         }
 
         if(details.hasParameters()){
-            cutParameters(index, commandSliced[1],context,event);
+            if(commandSliced.length > 1) {
+                System.out.println(commandSliced[1]);
+                cutParameters(index, commandSliced[1], context, event);
+            } else {
+                command.execute(event,null,context);
+            }
         } else {
             command.execute(event,null,context);
         }
