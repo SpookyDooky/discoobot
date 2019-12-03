@@ -45,6 +45,7 @@ public class CommandHandlerBot {
         if(details.isWhiteList()){
             if(!checkWhiteList(context)){
                 context.getChannel().sendMessage("You do not have permission to use this command :o").queue();
+                return;
             }
         }
 

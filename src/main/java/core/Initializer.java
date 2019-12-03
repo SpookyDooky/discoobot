@@ -1,15 +1,14 @@
 package core;
 
 import commandstuff.CommandDetails;
-import commandstuff.commands.random.Huts;
-import commandstuff.commands.support.GetInvite;
-import commandstuff.commands.support.Help;
+import commandstuff.commands.admin.*;
+import commandstuff.commands.random.*;
+import commandstuff.commands.support.*;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 /**
@@ -28,6 +27,7 @@ public class Initializer {
 
     private static void initCommands(){
         initWhiteList();
+        initAdminCommands();
         initMiscCommands();
         initRandomCommands();
         initSupportCommands();
@@ -49,19 +49,25 @@ public class Initializer {
         }
     }
 
-    //Misc commandstuff
+    //Admin commands
+    private static void initAdminCommands(){
+        CommandDetails restartDetails = new CommandDetails(0,0,false,false,true);
+        instance.addCommand(new Restart(),restartDetails);
+    }
+
+    //Misc commands
     private static void initMiscCommands(){
         CommandDetails chooseDetails = new CommandDetails(1,100, true, true,false);
         instance.addCommand(new Choose(),chooseDetails);
     }
 
-    //Random commandstuff
+    //Random command
     private static void initRandomCommands(){
         CommandDetails hutsDetails = new CommandDetails(0,0,false,false,false);
         instance.addCommand(new Huts(),hutsDetails);
     }
 
-    //Support commandstuff
+    //Support commands
     private static void initSupportCommands(){
         CommandDetails getInviteDetails = new CommandDetails(0,0,false,false,false);
         instance.addCommand(new GetInvite(),getInviteDetails);
@@ -70,7 +76,7 @@ public class Initializer {
         instance.addCommand(new Help(),helpDetails);
     }
 
-    //Voice commandstuff
+    //Voice commands
     private static void initVoiceCommands(){
         CommandDetails joinChannelDetails = new CommandDetails(0,0,false,false,false);
         instance.addCommand(new JoinChannel(),joinChannelDetails);

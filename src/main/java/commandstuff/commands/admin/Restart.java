@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class Restart implements ICommand {
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
+        context.getChannel().sendMessage("Restarting bot now, this might take a bit...").queue();
 
     }
 
@@ -17,6 +18,6 @@ public class Restart implements ICommand {
 
     @Override
     public String getCommandName() {
-        return null;
+        return "restart";
     }
 }
