@@ -83,6 +83,11 @@ public class Clip implements ICommand {
         return "Clips a piece of voice, usage !!clip for 15 second clip, and !!clip [time in seconds]";
     }
 
+    @Override
+    public String category() {
+        return "voice";
+    }
+
     public String getCommandName() {
         return "clip";
     }

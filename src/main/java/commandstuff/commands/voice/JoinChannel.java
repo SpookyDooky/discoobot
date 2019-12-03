@@ -24,6 +24,11 @@ public class JoinChannel implements ICommand {
         return "bot joins your voice channel";
     }
 
+    @Override
+    public String category() {
+        return "voice";
+    }
+
     public String getCommandName() {
         return "join";
     }

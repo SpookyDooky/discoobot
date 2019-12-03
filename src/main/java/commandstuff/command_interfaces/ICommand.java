@@ -7,5 +7,6 @@ public interface ICommand {
 
     void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context);
     String help();
+    String category();
     String getCommandName();
 }

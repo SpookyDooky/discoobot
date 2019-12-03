@@ -31,6 +31,11 @@ public class Choose implements ICommand {
     }
 
     @Override
+    public String category() {
+        return "misc";
+    }
+
+    @Override
     public String getCommandName() {
         return "choose";
     }

@@ -16,6 +16,11 @@ public class GetInvite implements ICommand {
     }
 
     @Override
+    public String category() {
+        return "support";
+    }
+
+    @Override
     public String getCommandName() {
         return "invitelink";
     }

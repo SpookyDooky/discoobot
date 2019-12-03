@@ -3,6 +3,7 @@ package core;
 import commandstuff.CommandContext;
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
+import core.managers.BotChatManager;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CommandHandlerBot {
@@ -27,11 +28,11 @@ public class CommandHandlerBot {
         ICommand command = null;
         CommandDetails details = null;
         for(int x = 0; x < Bot.getInstance().amountCommands(); x++){
-            if(commandName.equalsIgnoreCase(Bot.getInstance().commandList.get(x).getCommandName())){
+            if(commandName.equalsIgnoreCase(Bot.getInstance().getCommandList().get(x).getCommandName())){
                 exists = true;
                 index = x;
-                command = Bot.getInstance().commandList.get(x);
-                details = Bot.getInstance().commandDetailsList.get(x);
+                command = Bot.getInstance().getCommandList().get(x);
+                details = Bot.getInstance().getCommandDetailsList().get(x);
                 break;
             }
         }
@@ -39,6 +40,13 @@ public class CommandHandlerBot {
         if(!exists){
             context.getChannel().sendMessage("ThAt CoMmAnD dOeS nOt ExIsT nIfFo...").queue();
             return;
+        }
+
+        if(details.isWhiteList()){
+            if(!checkWhiteList(context)){
+                context.getChannel().sendMessage("You do not have permission to use this command :o").queue();
+                return;
+            }
         }
 
         if(details.hasParameters()){
@@ -55,8 +63,8 @@ public class CommandHandlerBot {
     }
 
     private static void cutParameters(int index, String parameters, CommandContext context, GuildMessageReceivedEvent event){
-        ICommand command = Bot.getInstance().commandList.get(index);
-        CommandDetails details = Bot.getInstance().commandDetailsList.get(index);
+        ICommand command = Bot.getInstance().getCommandList().get(index);
+        CommandDetails details = Bot.getInstance().getCommandDetailsList().get(index);
 
         if(details.getMaxParameters() == 1){
             String[] paras = {parameters};
@@ -76,5 +84,9 @@ public class CommandHandlerBot {
                 context.getChannel().sendMessage("Parameters exceed limites").queue();
             }
         }
+    }
+
+    private static boolean checkWhiteList(CommandContext context){
+        return Bot.getInstance().whiteListContains(context.getUser().getId());
     }
 }
