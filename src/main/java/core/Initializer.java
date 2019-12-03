@@ -6,6 +6,8 @@ import commandstuff.commands.random.*;
 import commandstuff.commands.support.*;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,15 +20,17 @@ import java.io.FileReader;
 public class Initializer {
 
     private static Bot instance;
+    private static final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
     public static void initializeBot(){
         new Bot();
         instance = Bot.getInstance();
+        logger.info("Initializing commands and white lists");
         initCommands();
     }
 
     private static void initCommands(){
-        System.out.println("INITIALIZING");
+
         initWhiteList();
         initAdminCommands();
         initMiscCommands();

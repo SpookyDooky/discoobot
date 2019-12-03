@@ -28,11 +28,11 @@ public class CommandHandlerBot {
         ICommand command = null;
         CommandDetails details = null;
         for(int x = 0; x < Bot.getInstance().amountCommands(); x++){
-            if(commandName.equalsIgnoreCase(Bot.getInstance().commandList.get(x).getCommandName())){
+            if(commandName.equalsIgnoreCase(Bot.getInstance().getCommandList().get(x).getCommandName())){
                 exists = true;
                 index = x;
-                command = Bot.getInstance().commandList.get(x);
-                details = Bot.getInstance().commandDetailsList.get(x);
+                command = Bot.getInstance().getCommandList().get(x);
+                details = Bot.getInstance().getCommandDetailsList().get(x);
                 break;
             }
         }
@@ -63,8 +63,8 @@ public class CommandHandlerBot {
     }
 
     private static void cutParameters(int index, String parameters, CommandContext context, GuildMessageReceivedEvent event){
-        ICommand command = Bot.getInstance().commandList.get(index);
-        CommandDetails details = Bot.getInstance().commandDetailsList.get(index);
+        ICommand command = Bot.getInstance().getCommandList().get(index);
+        CommandDetails details = Bot.getInstance().getCommandDetailsList().get(index);
 
         if(details.getMaxParameters() == 1){
             String[] paras = {parameters};

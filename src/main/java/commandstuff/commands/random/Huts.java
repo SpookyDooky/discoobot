@@ -21,6 +21,11 @@ public class Huts implements ICommand {
     }
 
     @Override
+    public String category() {
+        return "random";
+    }
+
+    @Override
     public String getCommandName() {
         return "huts";
     }

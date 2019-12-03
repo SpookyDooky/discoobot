@@ -15,6 +15,11 @@ public class LeaveChannel implements ICommand {
         return "bot leaves voice";
     }
 
+    @Override
+    public String category() {
+        return "voice";
+    }
+
     public String getCommandName() {
         return "leave";
     }

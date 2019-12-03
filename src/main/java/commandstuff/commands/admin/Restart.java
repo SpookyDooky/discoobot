@@ -18,6 +18,11 @@ public class Restart implements ICommand {
     }
 
     @Override
+    public String category() {
+        return "admin";
+    }
+
+    @Override
     public String getCommandName() {
         return "restart";
     }

@@ -6,10 +6,8 @@ import net.dv8tion.jda.api.JDABuilder;
 
 public class Launcher {
     private static JDA jda;
-    private static String[] args2;
 
     public static void main(String[] args) {
-        args2 = args;
         startBot();
     }
 
