@@ -32,4 +32,8 @@ public class CommandDetails {
     public boolean hasParameters(){
         return this.hasParameters;
     }
+
+    public boolean isWhiteList(){
+        return this.whiteList;
+    }
 }

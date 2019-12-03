@@ -3,6 +3,7 @@ package core;
 import commandstuff.CommandContext;
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
+import core.managers.BotChatManager;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CommandHandlerBot {
@@ -41,6 +42,12 @@ public class CommandHandlerBot {
             return;
         }
 
+        if(details.isWhiteList()){
+            if(!checkWhiteList(context)){
+                context.getChannel().sendMessage("You do not have permission to use this command :o").queue();
+            }
+        }
+
         if(details.hasParameters()){
             if(commandSliced.length > 1) {
                 System.out.println(commandSliced[1]);
@@ -76,5 +83,9 @@ public class CommandHandlerBot {
                 context.getChannel().sendMessage("Parameters exceed limites").queue();
             }
         }
+    }
+
+    private static boolean checkWhiteList(CommandContext context){
+        return Bot.getInstance().whiteListContains(context.getUser().getId());
     }
 }
