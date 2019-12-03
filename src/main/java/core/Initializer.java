@@ -2,6 +2,7 @@ package core;
 
 import commands.CommandDetails;
 import commands.random.Huts;
+import commands.support.GetInvite;
 import commands.voice.*;
 import commands.misc.*;
 
@@ -33,6 +34,9 @@ public class Initializer {
         //Misc commands
         CommandDetails chooseDetails = new CommandDetails(1,100, true, true,false);
         instance.addCommand(new Choose(),chooseDetails);
+
+        CommandDetails getInvite = new CommandDetails(0,0,false,false,false);
+        instance.addCommand(new GetInvite(),getInvite);
     }
 
 }

@@ -26,8 +26,8 @@ public class Choose implements ICommand {
     }
 
     @Override
-    public void help() {
-
+    public String help() {
+        return "Makes a decision between options, usage: !!choose option1, option2, ... etc";
     }
 
     @Override

@@ -20,8 +20,8 @@ public class JoinChannel implements ICommand {
         context.getChannel().sendMessage("Connecting to channel: " + channelVoice.getName()).queue();
     }
 
-    public void help() {
-
+    public String help() {
+        return "bot joins your voice channel";
     }
 
     public String getCommandName() {

@@ -33,7 +33,7 @@ public class Clip implements ICommand {
                 getWavFile(data);
                 System.out.println("SAMPLES: " + data.length);
             } catch(Exception e){
-                context.getChannel().sendMessage("Please make sure that the first argument is a number");
+                context.getChannel().sendMessage("Please make sure that the first argument is a number").queue();
             }
         }
 
@@ -79,8 +79,8 @@ public class Clip implements ICommand {
         return result;
     }
 
-    public void help() {
-
+    public String help() {
+        return "Clips a piece of voice, usage !!clip for 15 second clip, and !!clip [time in seconds]";
     }
 
     public String getCommandName() {

@@ -11,8 +11,8 @@ public class LeaveChannel implements ICommand {
         Bot.getInstance().getVoiceManager().disconnect();
     }
 
-    public void help() {
-
+    public String help() {
+        return "bot leaves voice";
     }
 
     public String getCommandName() {

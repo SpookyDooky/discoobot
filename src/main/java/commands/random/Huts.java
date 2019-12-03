@@ -16,8 +16,8 @@ public class Huts implements ICommand {
     }
 
     @Override
-    public void help() {
-
+    public String help() {
+        return "Returns a random funny piece of text";
     }
 
     @Override
