@@ -7,12 +7,14 @@ public class CommandDetails {
 
     private boolean commaNeedsRemoval;
     private boolean hasParameters;
+    private boolean whiteList;
 
-    public CommandDetails(int minParameters, int maxParameters, boolean commaNeedsRemoval, boolean hasParameters){
+    public CommandDetails(int minParameters, int maxParameters, boolean commaNeedsRemoval, boolean hasParameters, boolean whiteList){
         this.minParameters = minParameters;
         this.maxParameters= maxParameters;
         this.commaNeedsRemoval = commaNeedsRemoval;
         this.hasParameters = hasParameters;
+        this.whiteList = whiteList;
     }
 
     public int getMinParameters(){

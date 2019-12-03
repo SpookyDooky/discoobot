@@ -1,7 +1,7 @@
 package commands.voice;
 
 import commands.CommandContext;
-import commands.ICommand;
+import commands.command_interfaces.ICommand;
 import core.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
@@ -17,11 +17,11 @@ public class JoinChannel implements ICommand {
         AudioManager audioManager = guild.getAudioManager();
 
         Bot.getInstance().getVoiceManager().connectTo(channelVoice,audioManager);
-        context.getChannel().sendMessage("Connecting to channel: " + context.getChannel().getName()).queue();
+        context.getChannel().sendMessage("Connecting to channel: " + channelVoice.getName()).queue();
     }
 
-    public void help() {
-
+    public String help() {
+        return "bot joins your voice channel";
     }
 
     public String getCommandName() {

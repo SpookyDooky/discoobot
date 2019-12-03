@@ -1,7 +1,7 @@
 package commands.voice;
 
 import commands.CommandContext;
-import commands.ICommand;
+import commands.command_interfaces.ICommand;
 import core.Bot;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -11,8 +11,8 @@ public class LeaveChannel implements ICommand {
         Bot.getInstance().getVoiceManager().disconnect();
     }
 
-    public void help() {
-
+    public String help() {
+        return "bot leaves voice";
     }
 
     public String getCommandName() {

@@ -2,7 +2,7 @@ package core;
 
 import commands.CommandContext;
 import commands.CommandDetails;
-import commands.ICommand;
+import commands.command_interfaces.ICommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CommandHandlerBot {
@@ -12,7 +12,7 @@ public class CommandHandlerBot {
         CommandContext context = new CommandContext(event);
 
         String command = context.getMessage();
-        if(command.charAt(0) == 33 && command.charAt(1) == 33){
+        if(command.length() > 2 && command.charAt(0) == 33 && command.charAt(1) == 33){
             String[] splitted = command.split(" ", 2);
             findCommand(splitted, context, event);
         }
@@ -57,6 +57,12 @@ public class CommandHandlerBot {
     private static void cutParameters(int index, String parameters, CommandContext context, GuildMessageReceivedEvent event){
         ICommand command = Bot.getInstance().commandList.get(index);
         CommandDetails details = Bot.getInstance().commandDetailsList.get(index);
+
+        if(details.getMaxParameters() == 1){
+            String[] paras = {parameters};
+            command.execute(event,paras,context);
+            return;
+        }
 
         if(details.commaNeedsRemoval()){
             String[] separated = parameters.split(", ");
