@@ -13,7 +13,7 @@ public class Help implements ICommand {
         //All -> show every commands
         //For the others, show all commands in that category
 
-        if(parameters.length == 0){
+        if(parameters == null){
             context.getChannel().sendMessage(help()).queue();
         } else {
             context.getChannel().sendMessage("Ya fookin coont implement it ya knobead").queue();

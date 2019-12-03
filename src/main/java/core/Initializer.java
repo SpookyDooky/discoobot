@@ -7,6 +7,11 @@ import commandstuff.commands.support.Help;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 /**
  * Class that takes care of initialization of the bot
  * ATM primarily takes care of initializing all the available commandstuff
@@ -22,10 +27,26 @@ public class Initializer {
     }
 
     private static void initCommands(){
+        initWhiteList();
         initMiscCommands();
         initRandomCommands();
         initSupportCommands();
         initVoiceCommands();
+    }
+
+    private static void initWhiteList(){
+        File whiteList = new File("src/main/resources/whitelist/whitelist.txt");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(whiteList));
+            String line = reader.readLine();
+            while(line != null){
+                instance.addToWhiteList(line);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Misc commandstuff
