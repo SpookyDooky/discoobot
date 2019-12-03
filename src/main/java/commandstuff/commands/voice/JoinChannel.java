@@ -1,7 +1,7 @@
-package commands.voice;
+package commandstuff.commands.voice;
 
-import commands.CommandContext;
-import commands.command_interfaces.ICommand;
+import commandstuff.CommandContext;
+import commandstuff.command_interfaces.ICommand;
 import core.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;

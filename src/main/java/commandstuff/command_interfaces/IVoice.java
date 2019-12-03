@@ -1,4 +1,4 @@
-package commands.command_interfaces;
+package commandstuff.command_interfaces;
 
 public interface IVoice {
     /**

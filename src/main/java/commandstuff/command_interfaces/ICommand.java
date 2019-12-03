@@ -1,6 +1,6 @@
-package commands.command_interfaces;
+package commandstuff.command_interfaces;
 
-import commands.CommandContext;
+import commandstuff.CommandContext;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public interface ICommand {

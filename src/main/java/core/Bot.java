@@ -1,7 +1,7 @@
 package core;
 
-import commands.CommandDetails;
-import commands.command_interfaces.ICommand;
+import commandstuff.CommandDetails;
+import commandstuff.command_interfaces.ICommand;
 
 import java.util.ArrayList;
 

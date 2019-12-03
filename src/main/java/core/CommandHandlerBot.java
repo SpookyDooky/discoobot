@@ -1,8 +1,8 @@
 package core;
 
-import commands.CommandContext;
-import commands.CommandDetails;
-import commands.command_interfaces.ICommand;
+import commandstuff.CommandContext;
+import commandstuff.CommandDetails;
+import commandstuff.command_interfaces.ICommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CommandHandlerBot {
