@@ -1,24 +1,24 @@
+package core;
+
 import commandstuff.CommandContext;
-import core.Bot;
-import core.EventListenerBot;
-import core.Initializer;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
 public class Launcher {
     private static JDA jda;
+    private static String[] args2;
 
     public static void main(String[] args) {
+        args2 = args;
         startBot();
     }
 
-    public static void startBot(){
-        String token = "";
+    private static void startBot(){
+        String token = "NjUwNzI3NTUzODM2Nzc3NDky.XePlwQ.5NL89kwbMtmoCCWir4g7UIJGVyc";
 
         try{
             jda = new JDABuilder(token).build();
             jda.addEventListener(new EventListenerBot());
-
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -28,8 +28,7 @@ public class Launcher {
 
     public static void restart(CommandContext context){
         Bot.getInstance().getVoiceManager().disconnect();
-        jda.shutdownNow();
-        startBot();
-        context.getChannel().sendMessage("Successfully restarted!").queue();
+        context.getChannel().sendMessage("RESTARTING...").queue();
+        System.exit(1);
     }
 }

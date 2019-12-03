@@ -12,7 +12,6 @@ public class Help implements ICommand {
         //Nothing -> explain how help commands works
         //All -> show every commands
         //For the others, show all commands in that category
-
         if(parameters == null){
             context.getChannel().sendMessage(help()).queue();
         } else {

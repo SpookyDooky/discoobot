@@ -26,6 +26,7 @@ public class Initializer {
     }
 
     private static void initCommands(){
+        System.out.println("INITIALIZING");
         initWhiteList();
         initAdminCommands();
         initMiscCommands();
