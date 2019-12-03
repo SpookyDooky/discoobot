@@ -1,14 +1,18 @@
 package core;
 
-import commands.CommandDetails;
-import commands.command_interfaces.ICommand;
+import commandstuff.CommandDetails;
+import commandstuff.command_interfaces.ICommand;
+import core.managers.VoiceManager;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Bot {
 
     ArrayList<ICommand> commandList;
     ArrayList<CommandDetails> commandDetailsList;
+
+    private HashSet<String> whiteList;
 
     private static Bot instance;
     private static VoiceManager voiceManager;
@@ -18,6 +22,7 @@ public class Bot {
         this.commandDetailsList = new ArrayList<CommandDetails>();
         voiceManager = new VoiceManager(3);
         instance = this;
+        this.whiteList = new HashSet<>();
     }
 
     public static Bot getInstance(){
@@ -35,5 +40,13 @@ public class Bot {
 
     public int amountCommands(){
         return this.commandList.size();
+    }
+
+    public boolean whiteListContains(String userId){
+        return this.whiteList.contains(userId);
+    }
+
+    public void addToWhiteList(String userId){
+        this.whiteList.add(userId);
     }
 }

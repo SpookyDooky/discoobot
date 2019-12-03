@@ -1,4 +1,4 @@
-package commands;
+package commandstuff;
 
 public class CommandDetails {
 

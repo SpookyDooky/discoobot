@@ -1,4 +1,4 @@
-package commands;
+package commandstuff;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;

@@ -1,10 +1,10 @@
-package commands.support;
+package commandstuff.commands.admin;
 
-import commands.CommandContext;
-import commands.command_interfaces.ICommand;
+import commandstuff.CommandContext;
+import commandstuff.command_interfaces.ICommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class Help implements ICommand {
+public class Restart implements ICommand {
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
 
@@ -12,11 +12,11 @@ public class Help implements ICommand {
 
     @Override
     public String help() {
-        return null;
+        return "";
     }
 
     @Override
     public String getCommandName() {
-        return "help";
+        return null;
     }
 }
