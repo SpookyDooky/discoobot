@@ -18,13 +18,11 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
 
     private Deque<byte[]> history;
     private int mins;
-    private int stuffed;
 
     public VoiceManager(int mins){
         this.connections = 0;
         this.history = new ArrayDeque<byte[]>();
         this.mins = mins;
-        this.stuffed = 0;
         this.manager = null;
     }
 

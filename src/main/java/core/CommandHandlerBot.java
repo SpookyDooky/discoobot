@@ -3,7 +3,6 @@ package core;
 import commandstuff.CommandContext;
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
-import core.managers.BotChatManager;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CommandHandlerBot {
@@ -51,7 +50,6 @@ public class CommandHandlerBot {
 
         if(details.hasParameters()){
             if(commandSliced.length > 1) {
-                System.out.println(commandSliced[1]);
                 cutParameters(index, commandSliced[1], context, event);
             } else {
                 command.execute(event,null,context);
@@ -81,7 +79,7 @@ public class CommandHandlerBot {
             if(separated.length >= details.getMinParameters() && separated.length <= details.getMaxParameters()){
                 command.execute(event,separated,context);
             } else {
-                context.getChannel().sendMessage("Parameters exceed limites").queue();
+                context.getChannel().sendMessage("Wrong command usage: \n" + command.help()).queue();
             }
         }
     }
