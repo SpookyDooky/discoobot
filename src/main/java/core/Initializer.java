@@ -3,6 +3,7 @@ package core;
 import commands.CommandDetails;
 import commands.random.Huts;
 import commands.support.GetInvite;
+import commands.support.Help;
 import commands.voice.*;
 import commands.misc.*;
 
@@ -41,8 +42,11 @@ public class Initializer {
 
     //Support commands
     private static void initSupportCommands(){
-        CommandDetails getInvite = new CommandDetails(0,0,false,false,false);
-        instance.addCommand(new GetInvite(),getInvite);
+        CommandDetails getInviteDetails = new CommandDetails(0,0,false,false,false);
+        instance.addCommand(new GetInvite(),getInviteDetails);
+
+        CommandDetails helpDetails = new CommandDetails(0,1,false,true,false);
+        instance.addCommand(new Help(),helpDetails);
     }
 
     //Voice commands

@@ -1,7 +1,7 @@
 package commands.voice;
 
 import commands.CommandContext;
-import commands.ICommand;
+import commands.command_interfaces.ICommand;
 import core.Bot;
 import core.utils.BotLocator;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

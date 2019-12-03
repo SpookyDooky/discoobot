@@ -1,8 +1,7 @@
 package core;
 
 import commands.CommandDetails;
-import commands.ICommand;
-import net.dv8tion.jda.api.managers.AudioManager;
+import commands.command_interfaces.ICommand;
 
 import java.util.ArrayList;
 

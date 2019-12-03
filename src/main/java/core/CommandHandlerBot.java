@@ -2,7 +2,7 @@ package core;
 
 import commands.CommandContext;
 import commands.CommandDetails;
-import commands.ICommand;
+import commands.command_interfaces.ICommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CommandHandlerBot {
