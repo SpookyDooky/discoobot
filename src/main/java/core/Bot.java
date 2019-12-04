@@ -12,8 +12,8 @@ import java.util.HashSet;
 
 public class Bot {
 
-    private ArrayList<ICommand> commandList;
-    private ArrayList<CommandDetails> commandDetailsList;
+    private ArrayList<ICommand> commandList; //Todo - Make it so that when we need these they are built to free up memory
+    private ArrayList<CommandDetails> commandDetailsList; //Now we have double the amount of what we need in the memory
 
     private HashMap<String, Pair<ICommand,CommandDetails>> commandMap;
 
@@ -45,10 +45,6 @@ public class Bot {
 
         commandList.add(theCommand);
         commandDetailsList.add(info);
-    }
-
-    public int amountCommands(){
-        return this.commandList.size();
     }
 
     public boolean whiteListContains(String userId){

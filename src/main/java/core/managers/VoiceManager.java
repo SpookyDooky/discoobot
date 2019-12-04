@@ -51,17 +51,23 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
     }
 
 
-    public void connectTo(VoiceChannel channel, AudioManager manager){
+    public boolean connectTo(VoiceChannel channel, AudioManager manager){
         if(this.manager == null) {
             this.manager = manager;
             this.manager.setSendingHandler(this);
             this.manager.setReceivingHandler(this);
         }
 
+        if(channel == null){
+            return false;
+        }
+
         if(connections == 0){
             this.manager.openAudioConnection(channel);
             this.connections++;
+            return true;
         }
+        return true;
     }
 
     public void disconnect(){
