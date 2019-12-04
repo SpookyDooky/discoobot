@@ -79,6 +79,16 @@ public class Clip implements ICommand {
         return result;
     }
 
+    private String getRandomName(int lengthName){
+        StringBuilder result = new StringBuilder(lengthName);
+        String options = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        for(int x = 0; x < lengthName;x++){
+            int random = (int)(Math.random() * options.length());
+            result.append(options.indexOf(random));
+        }
+        return result.toString();
+    }
+
     public String help() {
         return "Clips a piece of voice, usage !!clip for 15 second clip, and !!clip [time in seconds]";
     }

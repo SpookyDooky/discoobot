@@ -6,14 +6,11 @@ import core.managers.VoiceManager;
 import org.javatuples.Pair;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Bot {
 
     private ArrayList<ICommand> commandList; //Todo - Make it so that when we need these they are built to free up memory
-    private ArrayList<CommandDetails> commandDetailsList; //Now we have double the amount of what we need in the memory
 
     private HashMap<String, Pair<ICommand,CommandDetails>> commandMap;
 
@@ -24,7 +21,6 @@ public class Bot {
 
     public Bot(){
         this.commandList = new ArrayList<ICommand>();
-        this.commandDetailsList = new ArrayList<CommandDetails>();
 
         this.commandMap = new HashMap<>();
         this.voiceManager = new VoiceManager(3);
@@ -44,7 +40,6 @@ public class Bot {
         this.commandMap.put(theCommand.getCommandName(),new Pair<ICommand,CommandDetails>(theCommand,info));
 
         commandList.add(theCommand);
-        commandDetailsList.add(info);
     }
 
     public boolean whiteListContains(String userId){
@@ -64,10 +59,13 @@ public class Bot {
     }
 
     public ArrayList<ICommand> getCommandList(){
-        return this.commandList;
-    }
+        Collection<Pair<ICommand,CommandDetails>> values = this.commandMap.values();
+        ArrayList<ICommand> commands = new ArrayList<>();
 
-    public ArrayList<CommandDetails> getCommandDetailsList(){
-        return this.commandDetailsList;
+        for (Pair<ICommand, CommandDetails> value : values) {
+            commands.add(value.getValue0());
+        }
+
+        return commands;
     }
 }
