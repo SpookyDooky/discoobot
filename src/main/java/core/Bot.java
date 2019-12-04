@@ -3,16 +3,19 @@ package core;
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
 import core.managers.VoiceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.javatuples.Pair;
+
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Bot {
 
     private ArrayList<ICommand> commandList;
     private ArrayList<CommandDetails> commandDetailsList;
+
+    private HashMap<String, Pair<ICommand,CommandDetails>> commandMap;
 
     private HashSet<String> whiteList;
 
@@ -22,6 +25,8 @@ public class Bot {
     public Bot(){
         this.commandList = new ArrayList<ICommand>();
         this.commandDetailsList = new ArrayList<CommandDetails>();
+
+        this.commandMap = new HashMap<>();
         this.voiceManager = new VoiceManager(3);
         instance = this;
         this.whiteList = new HashSet<>();
@@ -36,6 +41,8 @@ public class Bot {
     }
 
     public void addCommand(ICommand theCommand, CommandDetails info){
+        this.commandMap.put(theCommand.getCommandName(),new Pair<ICommand,CommandDetails>(theCommand,info));
+
         commandList.add(theCommand);
         commandDetailsList.add(info);
     }
@@ -50,6 +57,14 @@ public class Bot {
 
     public void addToWhiteList(String userId){
         this.whiteList.add(userId);
+    }
+
+    public boolean commandExists(String command){
+        return this.commandMap.containsKey(command);
+    }
+
+    public Pair<ICommand, CommandDetails> getCommandInfo(String command){
+        return this.commandMap.get(command);
     }
 
     public ArrayList<ICommand> getCommandList(){

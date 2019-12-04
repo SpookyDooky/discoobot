@@ -94,7 +94,7 @@ public class Initializer {
         CommandDetails clipDetails = new CommandDetails(0,1,false,true,false);
         instance.addCommand(new Clip(), clipDetails);
 
-        CommandDetails trimDetails = new CommandDetails(1, 1,true,true,false);
+        CommandDetails trimDetails = new CommandDetails(3, 3,true,true,false);
         instance.addCommand(new Trim(),trimDetails);
     }
 }
