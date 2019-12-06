@@ -10,18 +10,13 @@ import java.util.*;
 
 public class Bot {
 
-    private ArrayList<ICommand> commandList; //Todo - Make it so that when we need these they are built to free up memory
-
     private HashMap<String, Pair<ICommand,CommandDetails>> commandMap;
-
     private HashSet<String> whiteList;
 
     private static Bot instance;
     private VoiceManager voiceManager;
 
     public Bot(){
-        this.commandList = new ArrayList<ICommand>();
-
         this.commandMap = new HashMap<>();
         this.voiceManager = new VoiceManager(3);
         instance = this;
@@ -38,8 +33,6 @@ public class Bot {
 
     public void addCommand(ICommand theCommand, CommandDetails info){
         this.commandMap.put(theCommand.getCommandName(),new Pair<ICommand,CommandDetails>(theCommand,info));
-
-        commandList.add(theCommand);
     }
 
     public boolean whiteListContains(String userId){

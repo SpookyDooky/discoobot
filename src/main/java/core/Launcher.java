@@ -1,6 +1,7 @@
 package core;
 
 import commandstuff.CommandContext;
+import event.EventListenerBot;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
@@ -12,7 +13,7 @@ public class Launcher {
     }
 
     private static void startBot(){
-        String token = "NjUwNzI3NTUzODM2Nzc3NDky.XePlwQ.5NL89kwbMtmoCCWir4g7UIJGVyc";
+        String token = "NjUwNzI3NTUzODM2Nzc3NDky.XePlwQ.5NL89kwbMtmoCCWir4g7UIJGVyc"; //Todo - make new token
 
         try{
             jda = new JDABuilder(token).build();

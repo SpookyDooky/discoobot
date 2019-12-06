@@ -10,7 +10,11 @@ public class Trim implements ICommand {
         int startTime = Integer.valueOf(parameters[0]);
         int endTime = Integer.valueOf(parameters[1]);
 
-        String fileName = parameters[2];
+        if(startTime < endTime){
+            String fileName = parameters[2];
+        } else {
+            context.getChannel().sendMessage("Startime needs to be smaller than endtime").queue();
+        }
     }
 
     @Override

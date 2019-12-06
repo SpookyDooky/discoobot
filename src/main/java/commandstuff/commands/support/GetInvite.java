@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class GetInvite implements ICommand {
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
-        context.getChannel().sendMessage("https://discordapp.com/oauth2/authorize?client_id=650727553836777492&permissions=0&scope=bot").queue();
+        context.getChannel().sendMessage("https://discordapp.com/api/oauth2/authorize?client_id=650727553836777492&permissions=8&scope=bot").queue();
     }
 
     @Override

@@ -4,7 +4,10 @@ import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
 import core.Bot;
 import core.utils.BotLocator;
+import core.utils.Track;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ws.schild.jave.*;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -18,22 +21,38 @@ import java.util.ArrayList;
 public class Clip implements ICommand {
 
     private CommandContext context;
+    private final Logger logger = LoggerFactory.getLogger(Clip.class);
 
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
         this.context = context;
 
+        try {
+            if (!event.getMember().getVoiceState().inVoiceChannel()) {
+                context.getChannel().sendMessage("You can't use this command while not being in voice").queue();
+                return;
+            }
+        } catch(NullPointerException e){
+            context.getChannel().sendMessage("You can't use this command while not being in voice").queue();
+            return;
+        }
+
         if(parameters == null){
             //Take 5 secs
             byte[] data = getFinal(Bot.getInstance().getVoiceManager().getPCM_Stream(15));
+            logger.info(data.length + "");
             getWavFile(data);
         } else {
             try{
                 int seconds = Integer.valueOf(parameters[0]);
+                if(seconds < 0){
+                    context.getChannel().sendMessage("Please enter positive integers only").queue();
+                    return;
+                }
                 byte[] data = getFinal(Bot.getInstance().getVoiceManager().getPCM_Stream(seconds));
                 getWavFile(data);
                 System.out.println("SAMPLES: " + data.length);
             } catch(Exception e){
-                context.getChannel().sendMessage("Please make sure that the first argument is a number").queue();
+                context.getChannel().sendMessage("Please make sure that the first argument is a integer").queue();
             }
         }
 
@@ -41,33 +60,12 @@ public class Clip implements ICommand {
 
     private boolean getWavFile(byte[] PCM_Data){
         boolean result = false;
-        try{
-            File outputFileWave = new File("src/main/resources/result.wav");
-            AudioFormat format = new AudioFormat(48000,16,2,true,true);
-            AudioSystem.write(new AudioInputStream(new ByteArrayInputStream(PCM_Data), format,PCM_Data.length), AudioFileFormat.Type.WAVE,outputFileWave);
 
-            File target = new File("src/main/resources/clip.mp3");
-            AudioAttributes audio = new AudioAttributes();
-            audio.setCodec("libmp3lame");
-            audio.setBitRate(128000);
-            audio.setChannels(2);
-            audio.setSamplingRate(44100);
-            EncodingAttributes attrs = new EncodingAttributes();
-            attrs.setFormat("mp3");
-            attrs.setAudioAttributes(audio);
+        Track track = new Track(PCM_Data, "Wav");
+        File wavFile = track.getWavFile();
+        File mp3 = track.getMp3File(wavFile);
 
-            FFMPEGLocator loc = new BotLocator();
-            Encoder encoder = new Encoder(loc);
-            MultimediaObject pls = new MultimediaObject(outputFileWave);
-            encoder.encode(pls,target,attrs);
-
-            this.context.getChannel().sendFile(target).queue();
-            result = true;
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-        System.out.println("FINISHED BUILDING WAVE FILE");
+        context.getChannel().sendFile(mp3).queue();
         return result;
     }
 
@@ -77,16 +75,6 @@ public class Clip implements ICommand {
             result[x] = data.get(x);
         }
         return result;
-    }
-
-    private String getRandomName(int lengthName){
-        StringBuilder result = new StringBuilder(lengthName);
-        String options = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        for(int x = 0; x < lengthName;x++){
-            int random = (int)(Math.random() * options.length());
-            result.append(options.indexOf(random));
-        }
-        return result.toString();
     }
 
     public String help() {

@@ -65,7 +65,7 @@ public class Initializer {
         instance.addCommand(new Choose(),chooseDetails);
     }
 
-    //Random command
+    //Random commands
     private static void initRandomCommands(){
         CommandDetails hutsDetails = new CommandDetails(0,0,false,false,false);
         instance.addCommand(new Huts(),hutsDetails);
