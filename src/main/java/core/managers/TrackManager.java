@@ -24,10 +24,10 @@ public class TrackManager {
         trackMap.put(name,track);
         trackHistory.offer(name);
         tracks++;
-        if(tracks > 10){
+        if(tracks > maxTracks){
             String toRemove = trackHistory.poll();
-            Track theTrack = this.trackMap.get(toRemove);
-
+            Track theTrack = trackMap.remove(toRemove);
+            tracks--;
         }
     }
 }
