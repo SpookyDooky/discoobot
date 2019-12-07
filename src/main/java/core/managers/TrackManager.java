@@ -3,6 +3,7 @@ package core.managers;
 import core.utils.Track;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class TrackManager {
@@ -16,6 +17,7 @@ public class TrackManager {
 
     public TrackManager(int maxTracks){
         this.trackMap = new HashMap<>();
+        this.trackHistory = new LinkedList<>();
         this.tracks = 0;
         this.maxTracks = maxTracks;
     }

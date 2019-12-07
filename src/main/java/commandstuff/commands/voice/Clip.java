@@ -3,18 +3,12 @@ package commandstuff.commands.voice;
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
 import core.Bot;
-import core.utils.BotLocator;
+import core.managers.TrackManager;
 import core.utils.Track;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ws.schild.jave.*;
 
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -25,7 +19,6 @@ public class Clip implements ICommand {
 
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
         this.context = context;
-
         try {
             if (!event.getMember().getVoiceState().inVoiceChannel()) {
                 context.getChannel().sendMessage("You can't use this command while not being in voice").queue();
@@ -59,6 +52,7 @@ public class Clip implements ICommand {
     }
 
     private boolean getWavFile(byte[] PCM_Data){
+        TrackManager manager = Bot.getInstance().getTrackManager();
         boolean result = false;
 
         Track track = new Track(PCM_Data, "Wav");
@@ -66,7 +60,8 @@ public class Clip implements ICommand {
         File mp3 = track.getMp3File(wavFile);
 
         context.getChannel().sendFile(mp3).queue();
-        mp3.delete();
+        manager.addTrack(track,mp3.getName());
+        mp3.deleteOnExit();
         return result;
     }
 

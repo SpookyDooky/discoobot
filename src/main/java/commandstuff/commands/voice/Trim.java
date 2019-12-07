@@ -35,6 +35,8 @@ public class Trim implements ICommand {
                 File wav = newTrack.getWavFile();
                 File mp3 = newTrack.getMp3File(wav);
 
+                String mp3Name = mp3.getName();
+                manager.addTrack(newTrack,mp3Name);
                 context.getChannel().sendFile(mp3).queue();
                 if(mp3.delete()){
                     System.out.println("File deleted");
@@ -49,7 +51,7 @@ public class Trim implements ICommand {
 
     @Override
     public String help() {
-        return "command to trim clips, usage: \n";
+        return "Command to trim clips usage: !!trim start, end, name.mp3";
     }
 
     @Override
