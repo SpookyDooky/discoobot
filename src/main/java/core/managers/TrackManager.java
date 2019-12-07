@@ -3,10 +3,13 @@ package core.managers;
 import core.utils.Track;
 
 import java.util.HashMap;
+import java.util.Queue;
 
 public class TrackManager {
 
     private HashMap<String, Track> trackMap;
+
+    private Queue<String> trackHistory;
 
     private int tracks;
     private int maxTracks;
@@ -17,5 +20,14 @@ public class TrackManager {
         this.maxTracks = 10;
     }
 
+    public void addTrack(Track track, String name){
+        trackMap.put(name,track);
+        trackHistory.offer(name);
+        tracks++;
+        if(tracks > 10){
+            String toRemove = trackHistory.poll();
+            Track theTrack = this.trackMap.get(toRemove);
 
+        }
+    }
 }

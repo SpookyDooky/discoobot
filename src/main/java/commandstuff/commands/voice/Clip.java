@@ -66,6 +66,7 @@ public class Clip implements ICommand {
         File mp3 = track.getMp3File(wavFile);
 
         context.getChannel().sendFile(mp3).queue();
+        mp3.delete();
         return result;
     }
 
