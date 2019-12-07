@@ -30,7 +30,6 @@ public class Initializer {
     }
 
     private static void initCommands(){
-
         initWhiteList();
         initAdminCommands();
         initMiscCommands();
@@ -66,10 +65,13 @@ public class Initializer {
         instance.addCommand(new Choose(),chooseDetails);
     }
 
-    //Random command
+    //Random commands
     private static void initRandomCommands(){
         CommandDetails hutsDetails = new CommandDetails(0,0,false,false,false);
         instance.addCommand(new Huts(),hutsDetails);
+
+        CommandDetails clapDetails = new CommandDetails(1,1,false,true,false);
+        instance.addCommand(new Clap(),clapDetails);
     }
 
     //Support commands
@@ -91,5 +93,8 @@ public class Initializer {
 
         CommandDetails clipDetails = new CommandDetails(0,1,false,true,false);
         instance.addCommand(new Clip(), clipDetails);
+
+        CommandDetails trimDetails = new CommandDetails(3, 3,true,true,false);
+        instance.addCommand(new Trim(),trimDetails);
     }
 }

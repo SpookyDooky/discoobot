@@ -2,27 +2,26 @@ package core;
 
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
+import core.managers.TrackManager;
 import core.managers.VoiceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.javatuples.Pair;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+
+import java.util.*;
 
 public class Bot {
 
-    private ArrayList<ICommand> commandList;
-    private ArrayList<CommandDetails> commandDetailsList;
-
+    private HashMap<String, Pair<ICommand,CommandDetails>> commandMap;
     private HashSet<String> whiteList;
 
     private static Bot instance;
     private VoiceManager voiceManager;
+    private TrackManager trackManager;
 
     public Bot(){
-        this.commandList = new ArrayList<ICommand>();
-        this.commandDetailsList = new ArrayList<CommandDetails>();
+        this.commandMap = new HashMap<>();
         this.voiceManager = new VoiceManager(3);
+        this. trackManager = new TrackManager(10); //Number is the maximum tracks in memory
         instance = this;
         this.whiteList = new HashSet<>();
     }
@@ -35,13 +34,12 @@ public class Bot {
         return voiceManager;
     }
 
-    public void addCommand(ICommand theCommand, CommandDetails info){
-        commandList.add(theCommand);
-        commandDetailsList.add(info);
+    public TrackManager getTrackManager(){
+        return this.trackManager;
     }
 
-    public int amountCommands(){
-        return this.commandList.size();
+    public void addCommand(ICommand theCommand, CommandDetails info){
+        this.commandMap.put(theCommand.getCommandName(),new Pair<ICommand,CommandDetails>(theCommand,info));
     }
 
     public boolean whiteListContains(String userId){
@@ -52,11 +50,22 @@ public class Bot {
         this.whiteList.add(userId);
     }
 
-    public ArrayList<ICommand> getCommandList(){
-        return this.commandList;
+    public boolean commandExists(String command){
+        return this.commandMap.containsKey(command);
     }
 
-    public ArrayList<CommandDetails> getCommandDetailsList(){
-        return this.commandDetailsList;
+    public Pair<ICommand, CommandDetails> getCommandInfo(String command){
+        return this.commandMap.get(command);
+    }
+
+    public ArrayList<ICommand> getCommandList(){
+        Collection<Pair<ICommand,CommandDetails>> values = this.commandMap.values();
+        ArrayList<ICommand> commands = new ArrayList<>();
+
+        for (Pair<ICommand, CommandDetails> value : values) {
+            commands.add(value.getValue0());
+        }
+
+        return commands;
     }
 }

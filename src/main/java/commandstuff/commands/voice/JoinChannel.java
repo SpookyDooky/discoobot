@@ -16,8 +16,12 @@ public class JoinChannel implements ICommand {
         Guild guild = event.getGuild();
         AudioManager audioManager = guild.getAudioManager();
 
-        Bot.getInstance().getVoiceManager().connectTo(channelVoice,audioManager);
-        context.getChannel().sendMessage("Connecting to channel: " + channelVoice.getName()).queue();
+        boolean result = Bot.getInstance().getVoiceManager().connectTo(channelVoice,audioManager);
+        if(!result){
+            context.getChannel().sendMessage("You are not in a voice channel").queue();
+        } else {
+            context.getChannel().sendMessage("Connecting to channel: " + channelVoice.getName()).queue();
+        }
     }
 
     public String help() {

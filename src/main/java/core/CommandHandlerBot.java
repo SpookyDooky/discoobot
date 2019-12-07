@@ -3,8 +3,8 @@ package core;
 import commandstuff.CommandContext;
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
-import core.managers.BotChatManager;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.javatuples.Pair;
 
 public class CommandHandlerBot {
 
@@ -22,22 +22,13 @@ public class CommandHandlerBot {
     private static void findCommand(String[] commandSliced, CommandContext context, GuildMessageReceivedEvent event){
         String commandName = commandSliced[0].toLowerCase().replaceAll("!","");
 
-        int index = 0;
-        boolean exists = false;
-
         ICommand command = null;
         CommandDetails details = null;
-        for(int x = 0; x < Bot.getInstance().amountCommands(); x++){
-            if(commandName.equalsIgnoreCase(Bot.getInstance().getCommandList().get(x).getCommandName())){
-                exists = true;
-                index = x;
-                command = Bot.getInstance().getCommandList().get(x);
-                details = Bot.getInstance().getCommandDetailsList().get(x);
-                break;
-            }
-        }
-
-        if(!exists){
+        if(Bot.getInstance().commandExists(commandName)){
+            Pair<ICommand,CommandDetails> info = Bot.getInstance().getCommandInfo(commandName);
+            command = info.getValue0();
+            details = info.getValue1();
+        } else {
             context.getChannel().sendMessage("ThAt CoMmAnD dOeS nOt ExIsT nIfFo...").queue();
             return;
         }
@@ -51,8 +42,7 @@ public class CommandHandlerBot {
 
         if(details.hasParameters()){
             if(commandSliced.length > 1) {
-                System.out.println(commandSliced[1]);
-                cutParameters(index, commandSliced[1], context, event);
+                cutParameters(command, details , commandSliced[1], context, event);
             } else {
                 command.execute(event,null,context);
             }
@@ -62,10 +52,7 @@ public class CommandHandlerBot {
 
     }
 
-    private static void cutParameters(int index, String parameters, CommandContext context, GuildMessageReceivedEvent event){
-        ICommand command = Bot.getInstance().getCommandList().get(index);
-        CommandDetails details = Bot.getInstance().getCommandDetailsList().get(index);
-
+    private static void cutParameters(ICommand command, CommandDetails details, String parameters, CommandContext context, GuildMessageReceivedEvent event){
         if(details.getMaxParameters() == 1){
             String[] paras = {parameters};
             command.execute(event,paras,context);
@@ -81,7 +68,7 @@ public class CommandHandlerBot {
             if(separated.length >= details.getMinParameters() && separated.length <= details.getMaxParameters()){
                 command.execute(event,separated,context);
             } else {
-                context.getChannel().sendMessage("Parameters exceed limites").queue();
+                context.getChannel().sendMessage("Wrong command usage: \n" + command.help()).queue();
             }
         }
     }
