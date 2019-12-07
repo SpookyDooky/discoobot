@@ -20,7 +20,7 @@ public class Track {
         this.name = name;
     }
 
-    public byte[] trimData(int start, int end){
+    public Track trimData(int start, int end){
         if(start < end && start >= 0) {
             int bytesSecond = 192000;
             int startIndex = start * bytesSecond;
@@ -30,7 +30,8 @@ public class Track {
             for(int x = startIndex; x < endIndex;x++){
                 trimmedData[x - startIndex] = this.rawTrack[x];
             }
-            return trimmedData;
+
+            return new Track(trimmedData,getRandomName(8));
         }
         return null;
     }

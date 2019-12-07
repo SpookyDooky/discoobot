@@ -2,6 +2,7 @@ package core;
 
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
+import core.managers.TrackManager;
 import core.managers.VoiceManager;
 import org.javatuples.Pair;
 
@@ -15,10 +16,12 @@ public class Bot {
 
     private static Bot instance;
     private VoiceManager voiceManager;
+    private TrackManager trackManager;
 
     public Bot(){
         this.commandMap = new HashMap<>();
         this.voiceManager = new VoiceManager(3);
+        this. trackManager = new TrackManager(10); //Number is the maximum tracks in memory
         instance = this;
         this.whiteList = new HashSet<>();
     }
@@ -29,6 +32,10 @@ public class Bot {
 
     public VoiceManager getVoiceManager(){
         return voiceManager;
+    }
+
+    public TrackManager getTrackManager(){
+        return this.trackManager;
     }
 
     public void addCommand(ICommand theCommand, CommandDetails info){

@@ -14,10 +14,10 @@ public class TrackManager {
     private int tracks;
     private int maxTracks;
 
-    public TrackManager(){
+    public TrackManager(int maxTracks){
         this.trackMap = new HashMap<>();
         this.tracks = 0;
-        this.maxTracks = 10;
+        this.maxTracks = maxTracks;
     }
 
     public void addTrack(Track track, String name){
@@ -29,5 +29,12 @@ public class TrackManager {
             Track theTrack = trackMap.remove(toRemove);
             tracks--;
         }
+    }
+
+    public Track getTrack(String name){
+        if(trackMap.containsKey(name)){
+            return trackMap.get(name);
+        }
+        return null;
     }
 }
