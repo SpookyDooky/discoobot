@@ -19,11 +19,14 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
     private Deque<byte[]> history;
     private int mins;
 
+    private Queue<byte[]> data;
+
     public VoiceManager(int mins){
         this.connections = 0;
         this.history = new ArrayDeque<byte[]>();
         this.mins = mins;
         this.manager = null;
+        this.data = new LinkedList<>();
     }
 
     public boolean canReceiveCombined(){

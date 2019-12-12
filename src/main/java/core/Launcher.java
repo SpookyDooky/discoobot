@@ -13,7 +13,7 @@ public class Launcher {
     }
 
     private static void startBot(){
-        String token = "NjUwNzI3NTUzODM2Nzc3NDky.XePlwQ.5NL89kwbMtmoCCWir4g7UIJGVyc"; //Todo - make new token
+        String token = "NjUwNzI3NTUzODM2Nzc3NDky.XeuGrA.kzzOizj5769aBOjqlYih5kK7pB4";
 
         try{
             jda = new JDABuilder(token).build();

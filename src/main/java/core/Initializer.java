@@ -1,5 +1,6 @@
 package core;
 
+import com.google.gson.Gson;
 import commandstuff.CommandDetails;
 import commandstuff.commands.admin.*;
 import commandstuff.commands.random.*;
@@ -22,6 +23,8 @@ public class Initializer {
     private static Bot instance;
     private static final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
+    private static String[] soundNames;
+
     public static void initializeBot(){
         new Bot();
         instance = Bot.getInstance();
@@ -30,7 +33,10 @@ public class Initializer {
     }
 
     private static void initCommands(){
+        //WhiteList initialization
         initWhiteList();
+
+        //Command initialization
         initAdminCommands();
         initMiscCommands();
         initRandomCommands();
@@ -96,5 +102,16 @@ public class Initializer {
 
         CommandDetails trimDetails = new CommandDetails(3, 3,true,true,false);
         instance.addCommand(new Trim(),trimDetails);
+    }
+
+    //TODO - Needs GUILD_ID
+    private static void initData(){
+
+    }
+
+    //Sounds
+    private static void initSoundNames(){
+        //TODO - Make sure it automatically makes all commands for the sounds
+        Gson gson = new Gson();
     }
 }
