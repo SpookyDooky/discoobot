@@ -8,13 +8,16 @@ import commandstuff.commands.support.*;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
 import core.utils.GuildInfo;
+import core.utils.jsonmodels.SoundJSON;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.List;
 
 /**
  * Class that takes care of initialization of the bot
@@ -32,6 +35,7 @@ public class Initializer {
         instance = Bot.getInstance();
         logger.info("Initializing commands and white lists");
         initCommands();
+        logger.info("Initialization of commands has been successful");
     }
 
     private static void initCommands(){
@@ -109,7 +113,8 @@ public class Initializer {
     //TODO - Needs GUILD_ID
     public static void initData(GuildMessageReceivedEvent event){
         initGuildData(event);
-        initSoundCommands();
+        logger.info("Sounds names are being initialized");
+        initSoundNames();
     }
 
     //Guild info
@@ -117,14 +122,36 @@ public class Initializer {
         String guildID = event.getGuild().getId();
         GuildInfo info = new GuildInfo(guildID);
 
+        logger.info("Guild data has been successfully initialized");
         //TODO make it so that a command can run while this is being loaded
         Bot.getInstance().setInfo(info);
 
     }
 
     //Sounds
-    private static void initSoundCommands(){
+    private static void initSoundNames(){
         //TODO - Make sure it automatically makes all commands for the sounds
-        Gson gson = new Gson();
+        File soundNames = new File("src/main/resources/sounds/soundlist/sounds.json");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(soundNames));
+            Gson gson = new Gson();
+            SoundJSON sounds = gson.fromJson(reader,SoundJSON.class);
+
+            logger.info("Sound names loaded, amount: " + sounds.getAmount());
+            logger.info("Initializing sound commands");
+            initSoundCommands(sounds);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void initSoundCommands(SoundJSON sounds){
+        List<String> names = sounds.getSoundNames();
+        CommandDetails details = new CommandDetails(0,0,false,false,false);
+        for(int x = 0; x < names.size();x++){
+            SoundEffect sound = new SoundEffect(names.get(x));
+            instance.addCommand(sound,details);
+        }
+        logger.info("Sound commands have been successfully initialized");
     }
 }

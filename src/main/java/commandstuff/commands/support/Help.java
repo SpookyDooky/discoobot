@@ -37,7 +37,7 @@ public class Help implements ICommand {
 
     @Override
     public String help() {
-        return "To use the help command: either use !!help + all/voice/misc/random/support";
+        return "To use the help command: either use !!help + all/voice/misc/random/support/sounds";
     }
 
     @Override

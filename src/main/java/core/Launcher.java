@@ -22,6 +22,13 @@ public class Launcher {
             e.printStackTrace();
         }
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
         Initializer.initializeBot();
     }
 
