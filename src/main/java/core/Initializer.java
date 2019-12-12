@@ -7,6 +7,8 @@ import commandstuff.commands.random.*;
 import commandstuff.commands.support.*;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
+import core.utils.GuildInfo;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,12 +107,23 @@ public class Initializer {
     }
 
     //TODO - Needs GUILD_ID
-    private static void initData(){
+    public static void initData(GuildMessageReceivedEvent event){
+        initGuildData(event);
+        initSoundCommands();
+    }
+
+    //Guild info
+    private static void initGuildData(GuildMessageReceivedEvent event){
+        String guildID = event.getGuild().getId();
+        GuildInfo info = new GuildInfo(guildID);
+
+        //TODO make it so that a command can run while this is being loaded
+        Bot.getInstance().setInfo(info);
 
     }
 
     //Sounds
-    private static void initSoundNames(){
+    private static void initSoundCommands(){
         //TODO - Make sure it automatically makes all commands for the sounds
         Gson gson = new Gson();
     }

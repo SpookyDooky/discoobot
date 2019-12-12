@@ -78,4 +78,15 @@ public class Bot {
     public boolean isGuildInit(){
         return this.initializedData;
     }
+
+    public void setInfo(GuildInfo info){
+        if(!this.initializedData){
+            this.info = info;
+            this.initializedData = true;
+        }
+    }
+
+    public GuildInfo getInfo(){
+        return this.info;
+    }
 }
