@@ -4,6 +4,7 @@ import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
 import core.managers.TrackManager;
 import core.managers.VoiceManager;
+import core.utils.GuildInfo;
 import org.javatuples.Pair;
 
 
@@ -18,12 +19,17 @@ public class Bot {
     private VoiceManager voiceManager;
     private TrackManager trackManager;
 
+    private boolean initializedData;
+    private GuildInfo info;
+
     public Bot(){
         this.commandMap = new HashMap<>();
         this.voiceManager = new VoiceManager(3);
         this. trackManager = new TrackManager(10); //Number is the maximum tracks in memory
-        instance = this;
         this.whiteList = new HashSet<>();
+        this.initializedData = false;
+
+        instance = this;
     }
 
     public static Bot getInstance(){
@@ -67,5 +73,20 @@ public class Bot {
         }
 
         return commands;
+    }
+
+    public boolean isGuildInit(){
+        return this.initializedData;
+    }
+
+    public void setInfo(GuildInfo info){
+        if(!this.initializedData){
+            this.info = info;
+            this.initializedData = true;
+        }
+    }
+
+    public GuildInfo getInfo(){
+        return this.info;
     }
 }

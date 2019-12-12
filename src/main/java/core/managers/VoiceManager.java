@@ -19,11 +19,14 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
     private Deque<byte[]> history;
     private int mins;
 
+    private Queue<byte[]> voiceBuffer;
+
     public VoiceManager(int mins){
         this.connections = 0;
         this.history = new ArrayDeque<byte[]>();
         this.mins = mins;
         this.manager = null;
+        this.voiceBuffer = new LinkedList<>();
     }
 
     public boolean canReceiveCombined(){
@@ -36,6 +39,9 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
 
     @Nullable
     public ByteBuffer provide20MsAudio() {
+        if(!voiceBuffer.isEmpty()){
+            return ByteBuffer.wrap(voiceBuffer.poll());
+        }
         return null;
     }
 
@@ -100,5 +106,9 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
             }
         }
         return finalResult;
+    }
+
+    public void offerVoiceData(byte[] data){
+        voiceBuffer.offer(data);
     }
 }

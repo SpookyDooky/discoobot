@@ -1,17 +1,23 @@
 package core;
 
+import com.google.gson.Gson;
 import commandstuff.CommandDetails;
 import commandstuff.commands.admin.*;
 import commandstuff.commands.random.*;
 import commandstuff.commands.support.*;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
+import core.utils.GuildInfo;
+import core.utils.jsonmodels.SoundJSON;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.List;
 
 /**
  * Class that takes care of initialization of the bot
@@ -22,15 +28,21 @@ public class Initializer {
     private static Bot instance;
     private static final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
+    private static String[] soundNames;
+
     public static void initializeBot(){
         new Bot();
         instance = Bot.getInstance();
         logger.info("Initializing commands and white lists");
         initCommands();
+        logger.info("Initialization of commands has been successful");
     }
 
     private static void initCommands(){
+        //WhiteList initialization
         initWhiteList();
+
+        //Command initialization
         initAdminCommands();
         initMiscCommands();
         initRandomCommands();
@@ -96,5 +108,50 @@ public class Initializer {
 
         CommandDetails trimDetails = new CommandDetails(3, 3,true,true,false);
         instance.addCommand(new Trim(),trimDetails);
+    }
+
+    //TODO - Needs GUILD_ID
+    public static void initData(GuildMessageReceivedEvent event){
+        initGuildData(event);
+        logger.info("Sounds names are being initialized");
+        initSoundNames();
+    }
+
+    //Guild info
+    private static void initGuildData(GuildMessageReceivedEvent event){
+        String guildID = event.getGuild().getId();
+        GuildInfo info = new GuildInfo(guildID);
+
+        logger.info("Guild data has been successfully initialized");
+        //TODO make it so that a command can run while this is being loaded
+        Bot.getInstance().setInfo(info);
+
+    }
+
+    //Sounds
+    private static void initSoundNames(){
+        //TODO - Make sure it automatically makes all commands for the sounds
+        File soundNames = new File("src/main/resources/sounds/soundlist/sounds.json");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(soundNames));
+            Gson gson = new Gson();
+            SoundJSON sounds = gson.fromJson(reader,SoundJSON.class);
+
+            logger.info("Sound names loaded, amount: " + sounds.getAmount());
+            logger.info("Initializing sound commands");
+            initSoundCommands(sounds);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void initSoundCommands(SoundJSON sounds){
+        List<String> names = sounds.getSoundNames();
+        CommandDetails details = new CommandDetails(0,0,false,false,false);
+        for(int x = 0; x < names.size();x++){
+            SoundEffect sound = new SoundEffect(names.get(x));
+            instance.addCommand(sound,details);
+        }
+        logger.info("Sound commands have been successfully initialized");
     }
 }

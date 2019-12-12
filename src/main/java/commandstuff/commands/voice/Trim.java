@@ -35,6 +35,7 @@ public class Trim implements ICommand {
                 File wav = newTrack.getWavFile();
                 File mp3 = newTrack.getMp3File(wav);
 
+                Bot.getInstance().getTrackManager().addTrack(newTrack,mp3.getName());
                 String mp3Name = mp3.getName();
                 manager.addTrack(newTrack,mp3Name);
                 context.getChannel().sendFile(mp3).queue();
