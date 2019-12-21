@@ -24,8 +24,8 @@ public class Bot {
 
     public Bot(){
         this.commandMap = new HashMap<>();
-        this.voiceManager = new VoiceManager(3);
-        this. trackManager = new TrackManager(10); //Number is the maximum tracks in memory
+        this.voiceManager = new VoiceManager(1);
+        this.trackManager = new TrackManager(10); //Number is the maximum tracks in memory
         this.whiteList = new HashSet<>();
         this.initializedData = false;
 

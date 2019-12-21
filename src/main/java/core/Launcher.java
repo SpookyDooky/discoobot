@@ -28,7 +28,6 @@ public class Launcher {
             e.printStackTrace();
         }
 
-
         Initializer.initializeBot();
     }
 

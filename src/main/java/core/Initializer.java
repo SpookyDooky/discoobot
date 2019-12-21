@@ -32,6 +32,7 @@ public class Initializer {
 
     public static void initializeBot(){
         new Bot();
+        new BotManager();
         instance = Bot.getInstance();
         logger.info("Initializing commands and white lists");
         initCommands();
@@ -48,6 +49,10 @@ public class Initializer {
         initRandomCommands();
         initSupportCommands();
         initVoiceCommands();
+
+        //Sounds initialization
+        logger.info("Sounds names are being initialized");
+        initSoundNames();
     }
 
     private static void initWhiteList(){
@@ -110,24 +115,6 @@ public class Initializer {
         instance.addCommand(new Trim(),trimDetails);
     }
 
-    //TODO - Needs GUILD_ID
-    public static void initData(GuildMessageReceivedEvent event){
-        initGuildData(event);
-        logger.info("Sounds names are being initialized");
-        initSoundNames();
-    }
-
-    //Guild info
-    private static void initGuildData(GuildMessageReceivedEvent event){
-        String guildID = event.getGuild().getId();
-        GuildInfo info = new GuildInfo(guildID);
-
-        logger.info("Guild data has been successfully initialized");
-        //TODO make it so that a command can run while this is being loaded
-        Bot.getInstance().setInfo(info);
-
-    }
-
     //Sounds
     private static void initSoundNames(){
         //TODO - Make sure it automatically makes all commands for the sounds
@@ -153,5 +140,23 @@ public class Initializer {
             instance.addCommand(sound,details);
         }
         logger.info("Sound commands have been successfully initialized");
+    }
+
+    //TODO - Needs GUILD_ID
+    public static void initData(GuildMessageReceivedEvent event){
+        initGuildData(event);
+
+        //Load quotes, might do that only when its necessary to save memory
+    }
+
+    //Guild info
+    private static void initGuildData(GuildMessageReceivedEvent event){
+        String guildID = event.getGuild().getId();
+        GuildInfo info = new GuildInfo(guildID);
+
+        logger.info("Guild data has been successfully initialized");
+        //TODO make it so that a command can run while this is being loaded
+        Bot.getInstance().setInfo(info);
+
     }
 }
