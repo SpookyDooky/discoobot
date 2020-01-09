@@ -4,6 +4,10 @@ import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
 import core.Bot;
 import core.BotManager;
+import core.managers.VoiceManager;
+import core.utils.GuildInfo;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import javax.sound.sampled.AudioFormat;
@@ -24,7 +28,19 @@ public class SoundEffect implements ICommand {
     //TODO - Make it so that you can only play sounds while you are in a voice channel
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
-        convert(event);
+        String guildId = event.getGuild().getId();
+        GuildInfo info = BotManager.getInstance().getGuildInfo(guildId);
+
+        VoiceChannel userChannel = event.getMember().getVoiceState().getChannel();
+
+        if(userChannel == null){
+            TextChannel channel = event.getChannel();
+            channel.sendMessage("Could not play the sound, you are not connected to a voicechannel").queue();
+        } else {
+            VoiceManager manager = info.getVoiceManager();
+            manager.connectTo(userChannel,event.getGuild().getAudioManager());
+            convert(event);
+        }
     }
 
     //To change it from WAV to PCM, Big Endian notation

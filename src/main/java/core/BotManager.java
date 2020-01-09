@@ -1,5 +1,6 @@
 package core;
 
+import core.managers.VoiceManager;
 import core.utils.GuildInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ public class BotManager {
 
     public static BotManager instance;
     private HashMap<String, GuildInfo> shards;
+
+    private HashMap<String, VoiceManager> voiceManager;
 
     private static final Logger logger = LoggerFactory.getLogger(BotManager.class);
 
@@ -51,4 +54,20 @@ public class BotManager {
         }
         return result;
     }
+
+    /**
+     * Destroys all voice connections
+     */
+    public void destroyAllConnections(){
+        for(GuildInfo info : shards.values()){
+            VoiceManager manager = info.getVoiceManager();
+            if(manager != null){
+                manager.disconnect();
+            }
+        }
+    }
+
+    public void containsGuild(String guildId){
+
+}
 }

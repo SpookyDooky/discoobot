@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Clip implements ICommand {
 
+    //TODO - Make it so that the temporary files
     private CommandContext context;
     private final Logger logger = LoggerFactory.getLogger(Clip.class);
 

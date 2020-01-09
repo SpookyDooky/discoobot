@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
 public class Launcher {
+
     private static JDA jda;
 
     public static void main(String[] args) {
@@ -32,8 +33,8 @@ public class Launcher {
     }
 
     public static void restart(CommandContext context){
-        Bot.getInstance().getVoiceManager().disconnect();
-        context.getChannel().sendMessage("RESTARTING...").queue();
+        BotManager.getInstance().destroyAllConnections();
+        context.getChannel().sendMessage("Shutting down...").queue();
         System.exit(1);
     }
 }

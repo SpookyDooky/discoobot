@@ -19,12 +19,7 @@ public class EventListenerBot extends ListenerAdapter {
             System.out.println(id);
             init = true;
         }
-        if(Bot.getInstance().isGuildInit()){
-            CommandHandlerBot.handleCommand(event);
-        } else {
-            Initializer.initData(event);
-            CommandHandlerBot.handleCommand(event);
-        }
 
+        CommandHandlerBot.handleCommand(event);
     }
 }

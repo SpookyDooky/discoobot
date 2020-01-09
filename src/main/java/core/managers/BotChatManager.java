@@ -13,4 +13,10 @@ public class BotChatManager {
             channel.sendMessage(message).queue();
         }
     }
+
+    private static void longMessage(String message, TextChannel channel){
+        String cutMessage = "";
+        int messages = (int)Math.ceil(message.length()/2000.0);
+
+    }
 }

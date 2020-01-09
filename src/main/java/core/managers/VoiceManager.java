@@ -13,8 +13,9 @@ import java.util.*;
 
 public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
 
-    private int connections;
+    private int usersConnected;
     private AudioManager manager;
+    private VoiceChannel connectedTo;
 
     private Deque<byte[]> history; //Voice history buffer
     private int mins;
@@ -28,10 +29,8 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
      * @param mins - Size of the voice history buffer
      */
     public VoiceManager(int mins){
-        this.connections = 0;
         this.history = new ArrayDeque<byte[]>();
         this.mins = mins;
-        this.manager = null;
         this.voiceBuffer = new LinkedList<>();
     }
 
@@ -87,9 +86,10 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
             return false;
         }
 
-        if(connections == 0){
+        if(this.connectedTo == null){
             this.manager.openAudioConnection(channel);
-            this.connections++;
+            this.connectedTo = channel;
+            this.usersConnected = channel.getMembers().size();
             return true;
         }
         return false;
@@ -99,9 +99,9 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
      * Disconnect from channel
      */
     public void disconnect(){
-        if(connections > 0){
+        if(this.connectedTo != null){
             this.manager.closeAudioConnection();
-            connections--;
+            this.connectedTo = null;
         }
     }
 

@@ -141,22 +141,4 @@ public class Initializer {
         }
         logger.info("Sound commands have been successfully initialized");
     }
-
-    //TODO - Needs GUILD_ID
-    public static void initData(GuildMessageReceivedEvent event){
-        initGuildData(event);
-
-        //Load quotes, might do that only when its necessary to save memory
-    }
-
-    //Guild info
-    private static void initGuildData(GuildMessageReceivedEvent event){
-        String guildID = event.getGuild().getId();
-        GuildInfo info = new GuildInfo(guildID);
-
-        logger.info("Guild data has been successfully initialized");
-        //TODO make it so that a command can run while this is being loaded
-        Bot.getInstance().setInfo(info);
-
-    }
 }
