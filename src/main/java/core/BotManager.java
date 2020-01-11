@@ -17,8 +17,6 @@ public class BotManager {
     public static BotManager instance;
     private HashMap<String, GuildInfo> shards;
 
-    private HashMap<String, VoiceManager> voiceManager;
-
     private static final Logger logger = LoggerFactory.getLogger(BotManager.class);
 
     //Todo - make it memory conservative
@@ -67,7 +65,5 @@ public class BotManager {
         }
     }
 
-    public void containsGuild(String guildId){
 
-}
 }

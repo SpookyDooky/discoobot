@@ -8,6 +8,7 @@ import commandstuff.commands.support.*;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
 import core.utils.GuildInfo;
+import core.utils.jsonmodels.GuildQuotesJSON;
 import core.utils.jsonmodels.SoundJSON;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
@@ -132,6 +133,7 @@ public class Initializer {
         }
     }
 
+    //Creates all the various sound commands
     private static void initSoundCommands(SoundJSON sounds){
         List<String> names = sounds.getSoundNames();
         CommandDetails details = new CommandDetails(0,0,false,false,false);
@@ -140,5 +142,21 @@ public class Initializer {
             instance.addCommand(sound,details);
         }
         logger.info("Sound commands have been successfully initialized");
+    }
+
+    public static GuildQuotesJSON initGuildQuotes(String guildId){
+        File guildQuotes = new File("src/main/resources/quotes/" + guildId + ".json");
+
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(guildQuotes));
+            Gson gson = new Gson();
+            GuildQuotesJSON quotes = gson.fromJson(reader,GuildQuotesJSON.class);
+
+            return quotes;
+        } catch(FileNotFoundException e){
+            //Todo - Make sure it takes care of creating the file if needed
+            e.printStackTrace();
+        }
+        return null;
     }
 }

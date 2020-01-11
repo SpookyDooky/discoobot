@@ -19,4 +19,9 @@ public class GuildQuotesJSON {
     public List<QuoteJSON> getQuotes(){
         return this.quotes;
     }
+
+    public String getRandomQuote(){
+        int index = (int)(Math.random() * amount);
+        return quotes.get(index).getQuote();
+    }
 }
