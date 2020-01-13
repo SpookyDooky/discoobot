@@ -29,7 +29,7 @@ public class GuildInfo {
 
     public GuildQuotesJSON getQuotes(){
         if(this.quotes == null){
-            this.quotes = Initializer.initGuildQuotes(this.guildID);
+            this.quotes = GuildQuotesJSON.initGuildQuotes(this.guildID);
         }
         return this.quotes;
     }

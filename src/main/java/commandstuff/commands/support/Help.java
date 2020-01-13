@@ -16,7 +16,7 @@ public class Help implements ICommand {
             String message = "List of commands: \n";
             if(cat.equalsIgnoreCase("all")){
                 for(ICommand command : Bot.getInstance().getCommandList()){
-                    if(!command.category().equalsIgnoreCase("admin")) {
+                    if(!command.category().equalsIgnoreCase("admin") && !command.category().equals("sounds")) {
                         message += "**!!" + command.getCommandName() + "** - ";
                         message += command.help();
                         message += "\n";

@@ -1,6 +1,7 @@
 package core;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import commandstuff.CommandDetails;
 import commandstuff.commands.admin.*;
 import commandstuff.commands.random.*;
@@ -75,6 +76,9 @@ public class Initializer {
     private static void initAdminCommands(){
         CommandDetails restartDetails = new CommandDetails(0,0,false,false,true);
         instance.addCommand(new Restart(),restartDetails);
+
+        CommandDetails getQuoteDetails = new CommandDetails(0,0,false,false,false);
+        instance.addCommand(new GetQuote(),getQuoteDetails);
     }
 
     //Misc commands
@@ -142,21 +146,5 @@ public class Initializer {
             instance.addCommand(sound,details);
         }
         logger.info("Sound commands have been successfully initialized");
-    }
-
-    public static GuildQuotesJSON initGuildQuotes(String guildId){
-        File guildQuotes = new File("src/main/resources/quotes/" + guildId + ".json");
-
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader(guildQuotes));
-            Gson gson = new Gson();
-            GuildQuotesJSON quotes = gson.fromJson(reader,GuildQuotesJSON.class);
-
-            return quotes;
-        } catch(FileNotFoundException e){
-            //Todo - Make sure it takes care of creating the file if needed
-            e.printStackTrace();
-        }
-        return null;
     }
 }
