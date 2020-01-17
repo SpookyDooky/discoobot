@@ -77,14 +77,18 @@ public class Initializer {
         CommandDetails restartDetails = new CommandDetails(0,0,false,false,true);
         instance.addCommand(new Restart(),restartDetails);
 
-        CommandDetails getQuoteDetails = new CommandDetails(0,0,false,false,false);
-        instance.addCommand(new GetQuote(),getQuoteDetails);
     }
 
     //Misc commands
     private static void initMiscCommands(){
         CommandDetails chooseDetails = new CommandDetails(1,100, true, true,false);
         instance.addCommand(new Choose(),chooseDetails);
+
+        CommandDetails getQuoteDetails = new CommandDetails(0,0,false,false,false);
+        instance.addCommand(new GetQuote(),getQuoteDetails);
+
+        CommandDetails addQuoteDetails = new CommandDetails(1,1,false,true,false);
+        instance.addCommand(new AddQuote(),addQuoteDetails);
     }
 
     //Random commands

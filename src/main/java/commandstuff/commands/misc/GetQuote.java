@@ -5,6 +5,7 @@ import commandstuff.command_interfaces.ICommand;
 import core.BotManager;
 import core.utils.GuildInfo;
 import core.utils.jsonmodels.GuildQuotesJSON;
+import core.utils.jsonmodels.QuoteJSON;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class GetQuote implements ICommand {
@@ -14,10 +15,11 @@ public class GetQuote implements ICommand {
         GuildInfo info = BotManager.getInstance().getGuildInfo(guildId);
 
         GuildQuotesJSON quotes = info.getQuotes();
+        QuoteJSON quoteObject = quotes.getRandomQuote();
         if(quotes.getAmount() == 0){
             event.getChannel().sendMessage("There are no quotes stored for this guild :o").queue();
         } else {
-            event.getChannel().sendMessage(quotes.getRandomQuote()).queue();
+            event.getChannel().sendMessage("\"" + quoteObject.getQuote() + "\"" + " - " + quoteObject.getBy()).queue();
         }
     }
 

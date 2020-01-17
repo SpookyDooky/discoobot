@@ -1,9 +1,7 @@
 package core.utils.jsonmodels;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.GsonBuilder;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,6 +11,7 @@ public class GuildQuotesJSON {
 
     private int amount;
     private List<QuoteJSON> quotes;
+    private static String guildIdStored;
 
     public GuildQuotesJSON(int amount, List<QuoteJSON> quotes){
         this.amount = amount;
@@ -27,12 +26,19 @@ public class GuildQuotesJSON {
         return this.quotes;
     }
 
-    public String getRandomQuote(){
+    public void addQuote(String quote, String userName){
+        QuoteJSON theQuote = new QuoteJSON(amount++,quote,userName,0,0);
+        this.quotes.add(theQuote);
+        rewriteFile();
+    }
+
+    public QuoteJSON getRandomQuote(){
         int index = (int)(Math.random() * amount);
-        return quotes.get(index).getQuote();
+        return quotes.get(index);
     }
 
     public static GuildQuotesJSON initGuildQuotes(String guildId){
+        guildIdStored = guildId;
         File guildQuotes = new File("src/main/resources/quotes/" + guildId + ".json");
 
         try{
@@ -42,7 +48,6 @@ public class GuildQuotesJSON {
 
             return quotes;
         } catch(FileNotFoundException e){
-            //Todo - Make sure it takes care of creating the file if needed
             createQuotesFile(guildId);
             return initGuildQuotes(guildId);
         }
@@ -60,6 +65,21 @@ public class GuildQuotesJSON {
             writer.write(jsonString);
             writer.close();
         } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void rewriteFile(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        String jsonString = gson.toJson(this);
+
+
+        try {
+            FileWriter writer = new FileWriter("src/main/resources/quotes/" + guildIdStored + ".json");
+            writer.write(jsonString);
+            writer.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
