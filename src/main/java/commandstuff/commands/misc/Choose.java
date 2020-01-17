@@ -8,7 +8,7 @@ public class Choose implements ICommand {
     private String[] sentences = {
             "The lord has spoken it will be: ", "I have concluded that it will be: ", "All shall perish, except this one: ",
             "Praise lord GabeN he has blessed us with his decision(wow): ", "Apparently the board has (poorly) decided: ",
-            "After debating for hours with mee6 I have come to the conclusion of: "
+            "After debating for hours with mee6 I have come to the conclusion of: ", "The prophecy mentioned: ", "Sadly the winner is: "
     };
 
     @Override

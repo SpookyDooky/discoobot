@@ -3,6 +3,8 @@ package commandstuff.commands.voice;
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
 import core.Bot;
+import core.BotManager;
+import core.utils.GuildInfo;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -16,7 +18,9 @@ public class JoinChannel implements ICommand {
         Guild guild = event.getGuild();
         AudioManager audioManager = guild.getAudioManager();
 
-        boolean result = Bot.getInstance().getVoiceManager().connectTo(channelVoice,audioManager);
+        GuildInfo info = BotManager.getInstance().getGuildInfo(guild.getId());
+
+        boolean result = info.getVoiceManager().connectTo(channelVoice,audioManager);
         if(!result){
             context.getChannel().sendMessage("You are not in a voice channel").queue();
         } else {

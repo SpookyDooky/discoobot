@@ -1,6 +1,7 @@
 package core;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import commandstuff.CommandDetails;
 import commandstuff.commands.admin.*;
 import commandstuff.commands.random.*;
@@ -8,6 +9,7 @@ import commandstuff.commands.support.*;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
 import core.utils.GuildInfo;
+import core.utils.jsonmodels.GuildQuotesJSON;
 import core.utils.jsonmodels.SoundJSON;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
@@ -32,6 +34,7 @@ public class Initializer {
 
     public static void initializeBot(){
         new Bot();
+        new BotManager();
         instance = Bot.getInstance();
         logger.info("Initializing commands and white lists");
         initCommands();
@@ -48,6 +51,10 @@ public class Initializer {
         initRandomCommands();
         initSupportCommands();
         initVoiceCommands();
+
+        //Sounds initialization
+        logger.info("Sounds names are being initialized");
+        initSoundNames();
     }
 
     private static void initWhiteList(){
@@ -69,12 +76,19 @@ public class Initializer {
     private static void initAdminCommands(){
         CommandDetails restartDetails = new CommandDetails(0,0,false,false,true);
         instance.addCommand(new Restart(),restartDetails);
+
     }
 
     //Misc commands
     private static void initMiscCommands(){
         CommandDetails chooseDetails = new CommandDetails(1,100, true, true,false);
         instance.addCommand(new Choose(),chooseDetails);
+
+        CommandDetails getQuoteDetails = new CommandDetails(0,0,false,false,false);
+        instance.addCommand(new GetQuote(),getQuoteDetails);
+
+        CommandDetails addQuoteDetails = new CommandDetails(1,1,false,true,false);
+        instance.addCommand(new AddQuote(),addQuoteDetails);
     }
 
     //Random commands
@@ -110,24 +124,6 @@ public class Initializer {
         instance.addCommand(new Trim(),trimDetails);
     }
 
-    //TODO - Needs GUILD_ID
-    public static void initData(GuildMessageReceivedEvent event){
-        initGuildData(event);
-        logger.info("Sounds names are being initialized");
-        initSoundNames();
-    }
-
-    //Guild info
-    private static void initGuildData(GuildMessageReceivedEvent event){
-        String guildID = event.getGuild().getId();
-        GuildInfo info = new GuildInfo(guildID);
-
-        logger.info("Guild data has been successfully initialized");
-        //TODO make it so that a command can run while this is being loaded
-        Bot.getInstance().setInfo(info);
-
-    }
-
     //Sounds
     private static void initSoundNames(){
         //TODO - Make sure it automatically makes all commands for the sounds
@@ -145,6 +141,7 @@ public class Initializer {
         }
     }
 
+    //Creates all the various sound commands
     private static void initSoundCommands(SoundJSON sounds){
         List<String> names = sounds.getSoundNames();
         CommandDetails details = new CommandDetails(0,0,false,false,false);

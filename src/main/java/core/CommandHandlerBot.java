@@ -8,7 +8,10 @@ import org.javatuples.Pair;
 
 public class CommandHandlerBot {
 
-
+    /**
+     * Splits the prefix from the name
+     * @param event - Guild event
+     */
     public static void handleCommand(GuildMessageReceivedEvent event){
         CommandContext context = new CommandContext(event);
 

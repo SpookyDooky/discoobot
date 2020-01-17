@@ -16,7 +16,6 @@ public class Bot {
     private HashSet<String> whiteList;
 
     private static Bot instance;
-    private VoiceManager voiceManager;
     private TrackManager trackManager;
 
     private boolean initializedData;
@@ -24,8 +23,7 @@ public class Bot {
 
     public Bot(){
         this.commandMap = new HashMap<>();
-        this.voiceManager = new VoiceManager(3);
-        this. trackManager = new TrackManager(10); //Number is the maximum tracks in memory
+        this.trackManager = new TrackManager(100); //Number is the maximum tracks in memory
         this.whiteList = new HashSet<>();
         this.initializedData = false;
 
@@ -36,9 +34,6 @@ public class Bot {
         return instance;
     }
 
-    public VoiceManager getVoiceManager(){
-        return voiceManager;
-    }
 
     public TrackManager getTrackManager(){
         return this.trackManager;
@@ -77,16 +72,5 @@ public class Bot {
 
     public boolean isGuildInit(){
         return this.initializedData;
-    }
-
-    public void setInfo(GuildInfo info){
-        if(!this.initializedData){
-            this.info = info;
-            this.initializedData = true;
-        }
-    }
-
-    public GuildInfo getInfo(){
-        return this.info;
     }
 }

@@ -3,6 +3,11 @@ package commandstuff.commands.voice;
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
 import core.Bot;
+import core.BotManager;
+import core.managers.VoiceManager;
+import core.utils.GuildInfo;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import javax.sound.sampled.AudioFormat;
@@ -20,12 +25,26 @@ public class SoundEffect implements ICommand {
         this.name = name;
     }
 
+    //TODO - Make it so that you can only play sounds while you are in a voice channel
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
-        convert();
+        String guildId = event.getGuild().getId();
+        GuildInfo info = BotManager.getInstance().getGuildInfo(guildId);
+
+        VoiceChannel userChannel = event.getMember().getVoiceState().getChannel();
+
+        if(userChannel == null){
+            TextChannel channel = event.getChannel();
+            channel.sendMessage("Could not play the sound, you are not connected to a voicechannel").queue();
+        } else {
+            VoiceManager manager = info.getVoiceManager();
+            manager.connectTo(userChannel,event.getGuild().getAudioManager());
+            convert(event);
+        }
     }
 
-    private void convert(){
+    //To change it from WAV to PCM, Big Endian notation
+    private void convert(GuildMessageReceivedEvent event){
         File target = new File("src/main/resources/sounds/wav/" + this.name + ".wav");
         AudioFormat OUTPUT_FORMAT = new AudioFormat(48000.0f, 16, 2, true, true);
 
@@ -45,7 +64,7 @@ public class SoundEffect implements ICommand {
                     index++;
                 }
 
-                Bot.getInstance().getVoiceManager().offerVoiceData(fragment.clone());
+                BotManager.getInstance().getGuildInfo(event.getGuild().getId()).getVoiceManager().offerVoiceData(fragment.clone()); //Putting it in the buffer
                 fragment = new byte[3840];
             }
         } catch (Exception e) {

@@ -13,19 +13,24 @@ import java.util.*;
 
 public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
 
-    private int connections;
+    private int usersConnected;
     private AudioManager manager;
+    private VoiceChannel connectedTo;
 
-    private Deque<byte[]> history;
+    private Deque<byte[]> history; //Voice history buffer
     private int mins;
 
-    private Queue<byte[]> voiceBuffer;
 
+    private Queue<byte[]> voiceBuffer; //Voice play buffer
+
+    /**
+     * Takes care of basic voice functions, like connecting, disconnecting, playing audio, also holds the voice history
+     * and the voice play buffer
+     * @param mins - Size of the voice history buffer
+     */
     public VoiceManager(int mins){
-        this.connections = 0;
         this.history = new ArrayDeque<byte[]>();
         this.mins = mins;
-        this.manager = null;
         this.voiceBuffer = new LinkedList<>();
     }
 
@@ -37,6 +42,10 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
         return true;
     }
 
+    /**
+     * lets the bot play sounds
+     * @return - Byte buffer for 20ms of audio
+     */
     @Nullable
     public ByteBuffer provide20MsAudio() {
         if(!voiceBuffer.isEmpty()){
@@ -45,6 +54,10 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
         return null;
     }
 
+    /**
+     * Takes care of storing the audio for clipping
+     * @param audio - Combined user audio
+     */
     public void handleCombinedAudio(@Nonnull CombinedAudio audio){
         byte[] data = audio.getAudioData(1.0f);
 
@@ -56,7 +69,12 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
         }
     }
 
-
+    /**
+     * Connect to voice channel
+     * @param channel - The channel
+     * @param manager - Guild AudioManager
+     * @return - Boolean, true -> connection was successful otherwise false
+     */
     public boolean connectTo(VoiceChannel channel, AudioManager manager){
         if(this.manager == null) {
             this.manager = manager;
@@ -68,21 +86,30 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
             return false;
         }
 
-        if(connections == 0){
+        if(this.connectedTo == null){
             this.manager.openAudioConnection(channel);
-            this.connections++;
+            this.connectedTo = channel;
+            this.usersConnected = channel.getMembers().size();
             return true;
         }
-        return true;
+        return false;
     }
 
+    /**
+     * Disconnect from channel
+     */
     public void disconnect(){
-        if(connections > 0){
+        if(this.connectedTo != null){
             this.manager.closeAudioConnection();
-            connections--;
+            this.connectedTo = null;
         }
     }
 
+    /**
+     * Returns the last X seconds
+     * @param seconds - Amount of seconds
+     * @return - Raw data
+     */
     public ArrayList<Byte> getPCM_Stream(int seconds){
         int sampleSize = seconds * 50;
         ArrayList<byte[]> result = new ArrayList<byte[]>();

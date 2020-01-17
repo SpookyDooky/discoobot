@@ -3,7 +3,9 @@ package commandstuff.commands.voice;
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
 import core.Bot;
+import core.BotManager;
 import core.managers.TrackManager;
+import core.managers.VoiceManager;
 import core.utils.Track;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 public class Clip implements ICommand {
 
+    //TODO - Make it so that the temporary files
     private CommandContext context;
     private final Logger logger = LoggerFactory.getLogger(Clip.class);
 
@@ -29,10 +32,11 @@ public class Clip implements ICommand {
             return;
         }
 
+        VoiceManager botVoiceManager = BotManager.getInstance().getGuildInfo(event.getGuild().getId()).getVoiceManager();
         if(parameters == null){
             //Take 5 secs
-            byte[] data = getFinal(Bot.getInstance().getVoiceManager().getPCM_Stream(15));
-            logger.info(data.length + "");
+            byte[] data = getFinal(botVoiceManager.getPCM_Stream(15));
+            logger.info("SAMPLE SIZE: " + data.length);
             getWavFile(data);
         } else {
             try{
@@ -41,9 +45,9 @@ public class Clip implements ICommand {
                     context.getChannel().sendMessage("Please enter positive integers only").queue();
                     return;
                 }
-                byte[] data = getFinal(Bot.getInstance().getVoiceManager().getPCM_Stream(seconds));
+                byte[] data = getFinal(botVoiceManager.getPCM_Stream(seconds));
+                logger.info("SAMPLE SIZE: " + data.length);
                 getWavFile(data);
-                System.out.println("SAMPLES: " + data.length);
             } catch(Exception e){
                 context.getChannel().sendMessage("Please make sure that the first argument is a integer").queue();
             }
