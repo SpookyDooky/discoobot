@@ -1,17 +1,14 @@
 package core;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import commandstuff.CommandDetails;
 import commandstuff.commands.admin.*;
 import commandstuff.commands.random.*;
 import commandstuff.commands.support.*;
 import commandstuff.commands.voice.*;
 import commandstuff.commands.misc.*;
-import core.utils.GuildInfo;
-import core.utils.jsonmodels.GuildQuotesJSON;
+import core.managers.BotManager;
 import core.utils.jsonmodels.SoundJSON;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,6 +86,9 @@ public class Initializer {
 
         CommandDetails addQuoteDetails = new CommandDetails(1,1,false,true,false);
         instance.addCommand(new AddQuote(),addQuoteDetails);
+
+        CommandDetails deleteQuoteDetails = new CommandDetails(1,1,false,true,false);
+        instance.addCommand(new DeleteQuote(),deleteQuoteDetails);
     }
 
     //Random commands

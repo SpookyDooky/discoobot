@@ -2,7 +2,7 @@ package commandstuff.commands.misc;
 
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
-import core.BotManager;
+import core.managers.BotManager;
 import core.utils.GuildInfo;
 import core.utils.jsonmodels.GuildQuotesJSON;
 import core.utils.jsonmodels.QuoteJSON;
@@ -19,7 +19,7 @@ public class GetQuote implements ICommand {
         if(quotes.getAmount() == 0){
             event.getChannel().sendMessage("There are no quotes stored for this guild :o").queue();
         } else {
-            event.getChannel().sendMessage("\"" + quoteObject.getQuote() + "\"" + " - " + quoteObject.getBy()).queue();
+            event.getChannel().sendMessage("\"" + quoteObject.getQuote() + "\"" + ", quoteID:" + quoteObject.getId()).queue();
         }
     }
 

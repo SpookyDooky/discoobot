@@ -1,6 +1,7 @@
 package core;
 
 import commandstuff.CommandContext;
+import core.managers.BotManager;
 import event.EventListenerBot;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -13,6 +14,9 @@ public class Launcher {
         startBot();
     }
 
+    /**
+     * Launches the bot
+     */
     private static void startBot(){
         String token = "NjUwNzI3NTUzODM2Nzc3NDky.XeuGrA.kzzOizj5769aBOjqlYih5kK7pB4";
 
@@ -32,6 +36,11 @@ public class Launcher {
         Initializer.initializeBot();
     }
 
+    /**
+     * Shuts the bot down for now, in the future we need a script that restarts the bot
+     * based on the exit code
+     * @param context
+     */
     public static void restart(CommandContext context){
         BotManager.getInstance().destroyAllConnections();
         context.getChannel().sendMessage("Shutting down...").queue();

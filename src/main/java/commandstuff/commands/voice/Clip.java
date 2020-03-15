@@ -3,7 +3,7 @@ package commandstuff.commands.voice;
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
 import core.Bot;
-import core.BotManager;
+import core.managers.BotManager;
 import core.managers.TrackManager;
 import core.managers.VoiceManager;
 import core.utils.Track;
@@ -65,7 +65,19 @@ public class Clip implements ICommand {
 
         context.getChannel().sendFile(mp3).queue();
         manager.addTrack(track,mp3.getName());
-        mp3.deleteOnExit();
+
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(mp3.delete()){
+            logger.info("MP3: " + mp3.getName() + " succesfully deleted.");
+        } else {
+            logger.warn("MP3: " + mp3.getName() + " could not delete file.");
+        }
+
         return result;
     }
 

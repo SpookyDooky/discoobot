@@ -2,7 +2,7 @@ package commandstuff.commands.misc;
 
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
-import core.BotManager;
+import core.managers.BotManager;
 import core.utils.GuildInfo;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -21,7 +21,7 @@ public class AddQuote implements ICommand {
 
     @Override
     public String help() {
-        return "Adds a quote to guild";
+        return "Adds a quote to guild, usage: !!addquote [quote without quotemarks]";
     }
 
     @Override

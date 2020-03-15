@@ -1,6 +1,5 @@
-package core;
+package core.managers;
 
-import core.managers.VoiceManager;
 import core.utils.GuildInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +63,5 @@ public class BotManager {
             }
         }
     }
-
 
 }

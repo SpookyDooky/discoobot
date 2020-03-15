@@ -27,7 +27,7 @@ public class GuildQuotesJSON {
     }
 
     public void addQuote(String quote, String userName){
-        QuoteJSON theQuote = new QuoteJSON(amount++,quote,userName,0,0);
+        QuoteJSON theQuote = new QuoteJSON(amount++,quote,0,0);
         this.quotes.add(theQuote);
         rewriteFile();
     }
@@ -35,6 +35,12 @@ public class GuildQuotesJSON {
     public QuoteJSON getRandomQuote(){
         int index = (int)(Math.random() * amount);
         return quotes.get(index);
+    }
+
+    public void deleteQuote(int index){
+        quotes.remove(index);
+        amount--;
+        rewriteFile();
     }
 
     public static GuildQuotesJSON initGuildQuotes(String guildId){
@@ -71,9 +77,7 @@ public class GuildQuotesJSON {
 
     private void rewriteFile(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
         String jsonString = gson.toJson(this);
-
 
         try {
             FileWriter writer = new FileWriter("src/main/resources/quotes/" + guildIdStored + ".json");
