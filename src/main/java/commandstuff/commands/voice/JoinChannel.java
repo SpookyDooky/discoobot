@@ -2,8 +2,7 @@ package commandstuff.commands.voice;
 
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
-import core.Bot;
-import core.BotManager;
+import core.managers.BotManager;
 import core.utils.GuildInfo;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;

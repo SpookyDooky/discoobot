@@ -22,6 +22,12 @@ public class CommandHandlerBot {
         }
     }
 
+    /**
+     * Checks if a command actually exists, also checks if parameters need to be separated and such
+     * @param commandSliced - Command and parameters split up
+     * @param context - Context of the command
+     * @param event - Guild event that contains the origin data of the command
+     */
     private static void findCommand(String[] commandSliced, CommandContext context, GuildMessageReceivedEvent event){
         String commandName = commandSliced[0].toLowerCase().replaceAll("!","");
 
@@ -36,14 +42,14 @@ public class CommandHandlerBot {
             return;
         }
 
-        if(details.isWhiteList()){
+        if(details.isWhiteList()){ //Checks if it is a whitelist only command
             if(!checkWhiteList(context)){
                 context.getChannel().sendMessage("You do not have permission to use this command :o").queue();
                 return;
             }
         }
 
-        if(details.hasParameters()){
+        if(details.hasParameters()){ //Checks if we need to cut parameters
             if(commandSliced.length > 1) {
                 cutParameters(command, details , commandSliced[1], context, event);
             } else {
@@ -55,6 +61,14 @@ public class CommandHandlerBot {
 
     }
 
+    /**
+     * Cuts the parameters into the amount required
+     * @param command - The command that needs to be executed
+     * @param details - Details of that command needed for cutting up the parameters
+     * @param parameters - Uncut parameters
+     * @param context - context
+     * @param event - Event
+     */
     private static void cutParameters(ICommand command, CommandDetails details, String parameters, CommandContext context, GuildMessageReceivedEvent event){
         if(details.getMaxParameters() == 1){
             String[] paras = {parameters};

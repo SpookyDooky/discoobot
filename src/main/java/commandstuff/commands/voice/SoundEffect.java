@@ -2,8 +2,7 @@ package commandstuff.commands.voice;
 
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
-import core.Bot;
-import core.BotManager;
+import core.managers.BotManager;
 import core.managers.VoiceManager;
 import core.utils.GuildInfo;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -25,7 +24,12 @@ public class SoundEffect implements ICommand {
         this.name = name;
     }
 
-    //TODO - Make it so that you can only play sounds while you are in a voice channel
+    /**
+     * Plays a sound through the bot
+     * @param event - Information about where the command was run
+     * @param parameters - Parameters that are associated with the command
+     * @param context - Contains information, like TextChannel and such
+     */
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
         String guildId = event.getGuild().getId();
@@ -43,7 +47,10 @@ public class SoundEffect implements ICommand {
         }
     }
 
-    //To change it from WAV to PCM, Big Endian notation
+    /**
+     * To convert it from wav to pcm, so that we can play it through the bot
+     * @param event - Information needed to retrieve some info
+     */
     private void convert(GuildMessageReceivedEvent event){
         File target = new File("src/main/resources/sounds/wav/" + this.name + ".wav");
         AudioFormat OUTPUT_FORMAT = new AudioFormat(48000.0f, 16, 2, true, true);
@@ -74,7 +81,7 @@ public class SoundEffect implements ICommand {
 
     @Override
     public String help() {
-        return "Stay yeetin my friends!";
+        return "sound";
     }
 
     @Override
