@@ -9,6 +9,7 @@ import core.utils.jsonmodels.QuoteJSON;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class GetQuote implements ICommand {
+
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
         String guildId = event.getGuild().getId();

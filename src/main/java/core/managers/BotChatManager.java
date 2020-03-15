@@ -6,9 +6,9 @@ public class BotChatManager {
 
     /**
      * In progress
-     * 
-     * @param message
-     * @param channel
+     * Method that sends basic messages
+     * @param message - The message
+     * @param channel - The channel to send the message to
      */
     public static void sendMessage(String message, TextChannel channel){
         if(message.length() >= 2000){
@@ -20,6 +20,11 @@ public class BotChatManager {
         }
     }
 
+    /**
+     * Method specifically for really long messages
+     * @param message - The message
+     * @param channel - Channel to sent the cut up messages to
+     */
     private static void longMessage(String message, TextChannel channel){
         String cutMessage = "";
         int messages = (int)Math.ceil(message.length()/2000.0);

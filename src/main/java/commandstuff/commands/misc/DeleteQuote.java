@@ -8,6 +8,7 @@ import core.utils.jsonmodels.QuoteJSON;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class DeleteQuote implements ICommand {
+    
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
         String quoteId = parameters[0];
@@ -24,7 +25,7 @@ public class DeleteQuote implements ICommand {
 
             info.getQuotes().deleteQuote(quoteIndex);
 
-            event.getChannel().sendMessage("Successfully removed the quote: \n" + "\"" + quote.getQuote());
+            event.getChannel().sendMessage("Successfully removed the quote: \n" + "\"" + quote.getQuote() + "\"").queue();
         } catch(NumberFormatException e){
             event.getChannel().sendMessage("Please make sure you put in a number.").queue();
         }
