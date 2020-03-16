@@ -71,7 +71,7 @@ public class Initializer {
     //Admin commands
     private static void initAdminCommands(){
         CommandDetails restartDetails = new CommandDetails(0,0,false,false,true);
-        instance.addCommand(new Restart(),restartDetails);
+        instance.addCommand(new Shutdown(),restartDetails);
 
     }
 

@@ -44,6 +44,6 @@ public class Launcher {
     public static void restart(CommandContext context){
         BotManager.getInstance().destroyAllConnections();
         context.getChannel().sendMessage("Shutting down...").queue();
-        System.exit(1);
+        System.exit(0);
     }
 }
