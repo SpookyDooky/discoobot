@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class Initializer {
 
-    private static Bot instance;
+    private static BotManager instance;
     private static final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
     private static String[] soundNames;
@@ -32,7 +32,7 @@ public class Initializer {
     public static void initializeBot(){
         new Bot();
         new BotManager();
-        instance = Bot.getInstance();
+        instance = BotManager.getInstance();
         logger.info("Initializing commands and white lists");
         initCommands();
         logger.info("Initialization of commands has been successful");
