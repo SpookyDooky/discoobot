@@ -59,6 +59,16 @@ public class GuildQuotesJSON {
         rewriteFile();
     }
 
+    public boolean upvoteQuote(int index){
+        try{
+            this.getQuotes().get(index).upvote();
+        } catch(ArrayIndexOutOfBoundsException e){
+            return false;
+        }
+        rewriteFile();
+        return true;
+    }
+
     /**
      * Method for loading the quotes from a json file
      * @param guildId - ID of the guild

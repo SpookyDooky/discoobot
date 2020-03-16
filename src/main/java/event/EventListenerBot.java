@@ -4,7 +4,6 @@ import core.CommandHandlerBot;
 import core.managers.BotManager;
 import core.managers.VoiceManager;
 import core.utils.GuildInfo;
-import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -19,7 +18,6 @@ public class EventListenerBot extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
-        //TODO - Make sure the guildID becomes known so that we can load quotes and such
         id = event.getGuild().getId();
         if(!init) {
             System.out.println(id);
