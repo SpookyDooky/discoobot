@@ -7,6 +7,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for holding all the quotes that belong to a specific guild
+ */
 public class GuildQuotesJSON {
 
     private int amount;
@@ -26,23 +29,41 @@ public class GuildQuotesJSON {
         return this.quotes;
     }
 
+    /**
+     * Adds a quote to the quote list of a guild
+     * @param quote - The quote
+     * @param userName - Username who made the quote (needs to be deleted)
+     */
     public void addQuote(String quote, String userName){
         QuoteJSON theQuote = new QuoteJSON(amount++,quote,0,0);
         this.quotes.add(theQuote);
         rewriteFile();
     }
 
+    /**
+     * Returns a random quote of a specific guild
+     * @return - The quote
+     */
     public QuoteJSON getRandomQuote(){
         int index = (int)(Math.random() * amount);
         return quotes.get(index);
     }
 
+    /**
+     * Deletes a quote for a specific guild
+     * @param index - Index(ID) of the quote
+     */
     public void deleteQuote(int index){
         quotes.remove(index);
         amount--;
         rewriteFile();
     }
 
+    /**
+     * Method for loading the quotes from a json file
+     * @param guildId - ID of the guild
+     * @return - Returns an object containing all quotes of a specific guild
+     */
     public static GuildQuotesJSON initGuildQuotes(String guildId){
         guildIdStored = guildId;
         File guildQuotes = new File("src/main/resources/quotes/" + guildId + ".json");
@@ -59,6 +80,10 @@ public class GuildQuotesJSON {
         }
     }
 
+    /**
+     * Method to create the json file if it does not exist
+     * @param guildId - ID of the guild to create the file for
+     */
     private static void createQuotesFile(String guildId){
         Gson gson = new Gson();
 
@@ -75,6 +100,9 @@ public class GuildQuotesJSON {
         }
     }
 
+    /**
+     * For adding new quotes to the file
+     */
     private void rewriteFile(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(this);
