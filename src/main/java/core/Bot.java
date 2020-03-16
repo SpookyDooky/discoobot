@@ -3,7 +3,6 @@ package core;
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
 import core.managers.TrackManager;
-import core.managers.VoiceManager;
 import core.utils.GuildInfo;
 import org.javatuples.Pair;
 
@@ -18,14 +17,12 @@ public class Bot {
     private static Bot instance;
     private TrackManager trackManager;
 
-    private boolean initializedData;
     private GuildInfo info;
 
     public Bot(){
         this.commandMap = new HashMap<>();
         this.trackManager = new TrackManager(100); //Number is the maximum tracks in memory
         this.whiteList = new HashSet<>();
-        this.initializedData = false;
 
         instance = this;
     }
@@ -68,9 +65,5 @@ public class Bot {
         }
 
         return commands;
-    }
-
-    public boolean isGuildInit(){
-        return this.initializedData;
     }
 }

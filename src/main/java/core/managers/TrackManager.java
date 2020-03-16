@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Class that makes sure not too many tracks are stored in the memory per guild
+ *
+ * Might put a hard total limit on this in the future so that it never exceeds 1000 in total
+ */
 public class TrackManager {
 
     private HashMap<String, Track> trackMap;
@@ -22,6 +27,11 @@ public class TrackManager {
         this.maxTracks = maxTracks;
     }
 
+    /**
+     * Method that takes care of enforcing the track limit per guild in the memory
+     * @param track - New track to add
+     * @param name - Name of the track
+     */
     public void addTrack(Track track, String name){
         trackMap.put(name,track);
         trackHistory.offer(name);
@@ -33,6 +43,11 @@ public class TrackManager {
         }
     }
 
+    /**
+     * Returns a track with a specific name
+     * @param name - name of the track
+     * @return - The track
+     */
     public Track getTrack(String name){
         if(trackMap.containsKey(name)){
             return trackMap.get(name);

@@ -124,7 +124,7 @@ public class Initializer {
         instance.addCommand(new Trim(),trimDetails);
     }
 
-    //Sounds
+    //Sounds, uses a json file for all the sound names
     private static void initSoundNames(){
         //TODO - Make sure it automatically makes all commands for the sounds
         File soundNames = new File("src/main/resources/sounds/soundlist/sounds.json");

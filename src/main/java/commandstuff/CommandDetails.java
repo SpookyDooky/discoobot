@@ -1,5 +1,8 @@
 package commandstuff;
 
+/**
+ * Class to set rules for some commands
+ */
 public class CommandDetails {
 
     private int minParameters;

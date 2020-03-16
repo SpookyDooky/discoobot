@@ -1,6 +1,9 @@
 package core.managers;
 
+import commandstuff.CommandDetails;
+import commandstuff.command_interfaces.ICommand;
 import core.utils.GuildInfo;
+import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +15,13 @@ import java.util.HashMap;
  * @Author - Ray
  */
 public class BotManager {
+    private static final Logger logger = LoggerFactory.getLogger(BotManager.class);
 
     public static BotManager instance;
     private HashMap<String, GuildInfo> shards;
 
-    private static final Logger logger = LoggerFactory.getLogger(BotManager.class);
+    //Command stuff
+    private HashMap<String, Pair<ICommand, CommandDetails>> commandMap;
 
     //Todo - make it memory conservative
     public BotManager(){
