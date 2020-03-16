@@ -30,7 +30,6 @@ public class Initializer {
     private static String[] soundNames;
 
     public static void initializeBot(){
-        new Bot();
         new BotManager();
         instance = BotManager.getInstance();
         logger.info("Initializing commands and white lists");

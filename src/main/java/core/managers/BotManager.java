@@ -15,7 +15,6 @@ import java.util.HashSet;
 /**
  * Class for managing the bot, making sure each guild has its own voice manager when necessary
  * Also removes objects that aren't used anymore like if a guild is not using its voice manager we would rather remove it from the memory
- * @Author - Ray
  */
 @SuppressWarnings("duplicate")
 public class BotManager {
@@ -28,11 +27,14 @@ public class BotManager {
     private HashMap<String, Pair<ICommand, CommandDetails>> commandMap;
     private HashSet<String> whiteList;
 
-    //Todo - make it memory conservative
+    private TrackManager trackManager;
+
+    //Todo - make it more memory conservative
     public BotManager(){
         this.shards = new HashMap<>();
         this.commandMap = new HashMap<>();
         this.whiteList = new HashSet<>();
+        this.trackManager = new TrackManager(200); //Only has 1 track manager to enforce a hard maximum of the total amount of tracks in memory
         instance = this;
     }
 
@@ -52,18 +54,37 @@ public class BotManager {
         this.whiteList.add(userId);
     }
 
+    /**
+     * Method to add a command to the command list of the bot so that it becomes executable
+     * @param theCommand - command interface
+     * @param details - command details, information about the command
+     */
     public void addCommand(ICommand theCommand, CommandDetails details){
         this.commandMap.put(theCommand.getCommandName(),new Pair<ICommand,CommandDetails>(theCommand, details));
     }
 
+    /**
+     * Method to check if a specific command exists
+     * @param command - command name
+     * @return - boolean
+     */
     public boolean commandExists(String command){
         return this.commandMap.containsKey(command);
     }
 
+    /**
+     * Returns the information about a specific command
+     * @param command - name of the command
+     * @return - information about the command
+     */
     public Pair<ICommand, CommandDetails> getCommandInfo(String command){
         return this.commandMap.get(command);
     }
 
+    /**
+     * Returns a list of all commands that the bot can execute
+     * @return - The list
+     */
     public ArrayList<ICommand> getCommandList(){
         Collection<Pair<ICommand,CommandDetails>> values = this.commandMap.values();
         ArrayList<ICommand> commands = new ArrayList<>();
@@ -74,6 +95,15 @@ public class BotManager {
 
         return commands;
     }
+
+    /**
+     * Returns the track manager of the bot
+     * @return - track manager
+     */
+    public TrackManager getTrackManager(){
+        return this.trackManager;
+    }
+
     /**
      * Looks up a guild, on guild id
      * @param id - the guilds id

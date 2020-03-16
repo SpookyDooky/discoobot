@@ -8,8 +8,7 @@ import java.util.Queue;
 
 /**
  * Class that makes sure not too many tracks are stored in the memory per guild
- *
- * Might put a hard total limit on this in the future so that it never exceeds 1000 in total
+ * Only one instance of this manager in the whole bot, this is so that we can enforce a hard maximum.
  */
 public class TrackManager {
 

@@ -2,7 +2,6 @@ package commandstuff.commands.voice;
 
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
-import core.Bot;
 import core.managers.BotManager;
 import core.managers.TrackManager;
 import core.managers.VoiceManager;
@@ -47,8 +46,8 @@ public class Clip implements ICommand {
         } else {
             try{
                 int seconds = Integer.valueOf(parameters[0]);
-                if(seconds < 0){
-                    context.getChannel().sendMessage("Please enter positive integers only").queue();
+                if(seconds <= 0){
+                    context.getChannel().sendMessage("Number has to be greater than zero").queue();
                     return;
                 }
                 byte[] data = getFinal(botVoiceManager.getPCM_Stream(seconds));
@@ -67,7 +66,7 @@ public class Clip implements ICommand {
      * @param PCM_Data - Raw audio data
      */
     private void getWavFile(byte[] PCM_Data){
-        TrackManager manager = Bot.getInstance().getTrackManager();
+        TrackManager manager = BotManager.getInstance().getTrackManager();
 
         Track track = new Track(PCM_Data, "Wav");
         File wavFile = track.getWavFile();
