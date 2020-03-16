@@ -39,7 +39,7 @@ public class Clip implements ICommand {
 
         VoiceManager botVoiceManager = BotManager.getInstance().getGuildInfo(event.getGuild().getId()).getVoiceManager();
         if(parameters == null){
-            //Take 5 secs
+            //Take 15 secs
             byte[] data = getFinal(botVoiceManager.getPCM_Stream(15));
             logger.info("SAMPLE SIZE: " + data.length);
             getWavFile(data);

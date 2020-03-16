@@ -4,6 +4,8 @@ import net.dv8tion.jda.api.audio.AudioReceiveHandler;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.audio.CombinedAudio;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 import javax.annotation.Nonnull;
@@ -137,5 +139,22 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
 
     public void offerVoiceData(byte[] data){
         voiceBuffer.offer(data);
+    }
+
+    public void userJoined(GuildVoiceJoinEvent event){
+        VoiceChannel channel = event.getChannelJoined();
+        if(this.connectedTo.equals(channel)){
+            this.usersConnected = this.connectedTo.getMembers().size();
+        }
+    }
+
+    public void userLeft(GuildVoiceLeaveEvent event){
+        VoiceChannel channel = event.getChannelLeft();
+        if(this.connectedTo.equals(channel)){
+            this.usersConnected = this.connectedTo.getMembers().size();
+            if(usersConnected == 0){
+                //Todo - start a timer to leave the channel automatically
+            }
+        }
     }
 }
