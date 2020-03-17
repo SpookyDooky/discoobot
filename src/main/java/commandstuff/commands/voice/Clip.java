@@ -2,7 +2,6 @@ package commandstuff.commands.voice;
 
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
-import core.Bot;
 import core.managers.BotManager;
 import core.managers.TrackManager;
 import core.managers.VoiceManager;
@@ -20,29 +19,35 @@ public class Clip implements ICommand {
     private CommandContext context;
     private final Logger logger = LoggerFactory.getLogger(Clip.class);
 
+    /**
+     * Method that sets up all the rules for when you can use the command
+     * @param event - The event
+     * @param parameters - Parameters
+     * @param context - Context in which the command was used
+     */
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
         this.context = context;
         try {
             if (!event.getMember().getVoiceState().inVoiceChannel()) {
-                context.getChannel().sendMessage("You can't use this command while not being in voice").queue();
+                context.getChannel().sendMessage("You have to be in a voice channel to use this command.").queue();
                 return;
             }
         } catch(NullPointerException e){
-            context.getChannel().sendMessage("You can't use this command while not being in voice").queue();
+            context.getChannel().sendMessage("You have to be in a voice channel to use this command.").queue();
             return;
         }
 
         VoiceManager botVoiceManager = BotManager.getInstance().getGuildInfo(event.getGuild().getId()).getVoiceManager();
         if(parameters == null){
-            //Take 5 secs
+            //Take 15 secs
             byte[] data = getFinal(botVoiceManager.getPCM_Stream(15));
             logger.info("SAMPLE SIZE: " + data.length);
             getWavFile(data);
         } else {
             try{
                 int seconds = Integer.valueOf(parameters[0]);
-                if(seconds < 0){
-                    context.getChannel().sendMessage("Please enter positive integers only").queue();
+                if(seconds <= 0){
+                    context.getChannel().sendMessage("Number has to be greater than zero").queue();
                     return;
                 }
                 byte[] data = getFinal(botVoiceManager.getPCM_Stream(seconds));
@@ -55,9 +60,13 @@ public class Clip implements ICommand {
 
     }
 
-    private boolean getWavFile(byte[] PCM_Data){
-        TrackManager manager = Bot.getInstance().getTrackManager();
-        boolean result = false;
+    /**
+     * Takes care of converting the stream to wav and from wav to MP3
+     * Also makes sure mp3 files are deleted from the file system
+     * @param PCM_Data - Raw audio data
+     */
+    private void getWavFile(byte[] PCM_Data){
+        TrackManager manager = BotManager.getInstance().getTrackManager();
 
         Track track = new Track(PCM_Data, "Wav");
         File wavFile = track.getWavFile();
@@ -67,7 +76,7 @@ public class Clip implements ICommand {
         manager.addTrack(track,mp3.getName());
 
         try {
-            Thread.sleep(250);
+            Thread.sleep(250); //TODO - Make sure that during this time other commands can also be ran
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -77,8 +86,6 @@ public class Clip implements ICommand {
         } else {
             logger.warn("MP3: " + mp3.getName() + " could not delete file.");
         }
-
-        return result;
     }
 
     private byte[] getFinal(ArrayList<Byte> data){

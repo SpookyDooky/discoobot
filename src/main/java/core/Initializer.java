@@ -24,15 +24,14 @@ import java.util.List;
  */
 public class Initializer {
 
-    private static Bot instance;
+    private static BotManager instance;
     private static final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
     private static String[] soundNames;
 
     public static void initializeBot(){
-        new Bot();
         new BotManager();
-        instance = Bot.getInstance();
+        instance = BotManager.getInstance();
         logger.info("Initializing commands and white lists");
         initCommands();
         logger.info("Initialization of commands has been successful");
@@ -72,7 +71,7 @@ public class Initializer {
     //Admin commands
     private static void initAdminCommands(){
         CommandDetails restartDetails = new CommandDetails(0,0,false,false,true);
-        instance.addCommand(new Restart(),restartDetails);
+        instance.addCommand(new Shutdown(),restartDetails);
 
     }
 
@@ -124,7 +123,7 @@ public class Initializer {
         instance.addCommand(new Trim(),trimDetails);
     }
 
-    //Sounds
+    //Sounds, uses a json file for all the sound names
     private static void initSoundNames(){
         //TODO - Make sure it automatically makes all commands for the sounds
         File soundNames = new File("src/main/resources/sounds/soundlist/sounds.json");

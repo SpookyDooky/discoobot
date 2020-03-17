@@ -29,4 +29,12 @@ public class QuoteJSON {
     public int getDownvotes() {
         return downvotes;
     }
+
+    public void upvote(){
+        this.upvotes++;
+    }
+
+    public void downvote(){
+        this.downvotes++;
+    }
 }

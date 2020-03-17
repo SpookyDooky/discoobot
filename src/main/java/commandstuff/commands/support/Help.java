@@ -2,8 +2,8 @@ package commandstuff.commands.support;
 
 import commandstuff.CommandContext;
 import commandstuff.command_interfaces.ICommand;
-import core.Bot;
-import core.managers.BotChatManager;
+import core.utils.ChatUtils;
+import core.managers.BotManager;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class Help implements ICommand {
@@ -15,7 +15,7 @@ public class Help implements ICommand {
             String cat = parameters[0];
             String message = "List of commands: \n";
             if(cat.equalsIgnoreCase("all")){
-                for(ICommand command : Bot.getInstance().getCommandList()){
+                for(ICommand command : BotManager.getInstance().getCommandList()){
                     if(!command.category().equalsIgnoreCase("admin") && !command.category().equals("sounds")) {
                         message += "**!!" + command.getCommandName() + "** - ";
                         message += command.help();
@@ -23,7 +23,7 @@ public class Help implements ICommand {
                     }
                 }
             } else {
-                for(ICommand command : Bot.getInstance().getCommandList()) {
+                for(ICommand command : BotManager.getInstance().getCommandList()) {
                     if (command.category().equalsIgnoreCase(cat)) {
                         message += "**!!" + command.getCommandName() + "** - ";
                         message += command.help();
@@ -31,7 +31,7 @@ public class Help implements ICommand {
                     }
                 }
             }
-            BotChatManager.sendMessage(message,context.getChannel());
+            ChatUtils.sendMessage(message,context.getChannel());
         }
     }
 

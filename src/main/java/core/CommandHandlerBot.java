@@ -3,6 +3,7 @@ package core;
 import commandstuff.CommandContext;
 import commandstuff.CommandDetails;
 import commandstuff.command_interfaces.ICommand;
+import core.managers.BotManager;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.javatuples.Pair;
 
@@ -33,8 +34,8 @@ public class CommandHandlerBot {
 
         ICommand command = null;
         CommandDetails details = null;
-        if(Bot.getInstance().commandExists(commandName)){
-            Pair<ICommand,CommandDetails> info = Bot.getInstance().getCommandInfo(commandName);
+        if(BotManager.getInstance().commandExists(commandName)){
+            Pair<ICommand,CommandDetails> info = BotManager.getInstance().getCommandInfo(commandName);
             command = info.getValue0();
             details = info.getValue1();
         } else {
@@ -90,7 +91,12 @@ public class CommandHandlerBot {
         }
     }
 
+    /**
+     * Checks if a user is on the whitelist
+     * @param context - Command context
+     * @return - returns a boolean
+     */
     private static boolean checkWhiteList(CommandContext context){
-        return Bot.getInstance().whiteListContains(context.getUser().getId());
+        return BotManager.getInstance().whiteListContains(context.getUser().getId());
     }
 }
