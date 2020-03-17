@@ -95,7 +95,6 @@ public class CommandHandlerBot {
      * Checks if a user is on the whitelist
      * @param context - Command context
      * @return - returns a boolean
-     * @return - returns a boolean
      */
     private static boolean checkWhiteList(CommandContext context){
         return BotManager.getInstance().whiteListContains(context.getUser().getId());

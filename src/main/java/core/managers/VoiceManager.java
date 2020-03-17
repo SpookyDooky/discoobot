@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.audio.CombinedAudio;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 import javax.annotation.Nonnull;
@@ -144,7 +145,7 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
     public void userJoined(GuildVoiceJoinEvent event){
         VoiceChannel channel = event.getChannelJoined();
         if(this.connectedTo.equals(channel)){
-            this.usersConnected = this.connectedTo.getMembers().size();
+            System.out.println(this.usersConnected);
         }
     }
 
@@ -152,8 +153,20 @@ public class VoiceManager implements AudioReceiveHandler, AudioSendHandler {
         VoiceChannel channel = event.getChannelLeft();
         if(this.connectedTo.equals(channel)){
             this.usersConnected = this.connectedTo.getMembers().size();
-            if(usersConnected == 0){
+            if(this.usersConnected - 1 == 0){
                 //Todo - start a timer to leave the channel automatically
+            }
+        }
+    }
+
+    public void userMoved(GuildVoiceMoveEvent event){
+        VoiceChannel left = event.getChannelLeft();
+        VoiceChannel joined = event.getChannelJoined();
+
+        if(this.connectedTo.equals(left) || this.connectedTo.equals(joined)){
+            this.usersConnected = this.connectedTo.getMembers().size();
+            if(this.usersConnected - 1 == 0){
+                //Do something
             }
         }
     }
