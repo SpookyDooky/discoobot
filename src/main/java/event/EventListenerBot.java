@@ -12,17 +12,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class EventListenerBot extends ListenerAdapter {
 
-    private static String id;
-    private static boolean init = false;
-
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
-        id = event.getGuild().getId();
-        if(!init) {
-            System.out.println(id);
-            init = true;
-        }
-
         CommandHandlerBot.handleCommand(event);
     }
 

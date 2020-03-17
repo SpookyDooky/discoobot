@@ -25,16 +25,16 @@ public class UpvoteQuote implements ICommand {
 
     @Override
     public String help() {
-        return null;
+        return "upvotes a quote, usage: !!upvote quoteID";
     }
 
     @Override
     public String category() {
-        return null;
+        return "misc";
     }
 
     @Override
     public String getCommandName() {
-        return null;
+        return "upvote";
     }
 }

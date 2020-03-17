@@ -20,7 +20,8 @@ public class GetQuote implements ICommand {
         if(quotes.getAmount() == 0){
             event.getChannel().sendMessage("There are no quotes stored for this guild :o").queue();
         } else {
-            event.getChannel().sendMessage("\"" + quoteObject.getQuote() + "\"" + ", quoteID:" + quoteObject.getId()).queue();
+            event.getChannel().sendMessage("**" + quoteObject.getQuote() + "**" + "\n quoteID: " + quoteObject.getId() + ", upvotes: " +
+                    quoteObject.getUpvotes() + ", downvotes: " + quoteObject.getDownvotes()).queue();
         }
     }
 

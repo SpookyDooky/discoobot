@@ -7,6 +7,7 @@ import core.utils.jsonmodels.GuildQuotesJSON;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class DownvoteQuote implements ICommand {
+
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] parameters, CommandContext context) {
         int quoteID = Integer.valueOf(parameters[0]);
@@ -16,7 +17,7 @@ public class DownvoteQuote implements ICommand {
         boolean success = quotes.downvoteQuote(quoteID);
 
         if(success){
-            event.getChannel().sendMessage("Successfully downvoted quote: " + quotes.getQuotes().get(quoteID)).queue();
+            event.getChannel().sendMessage("Successfully downvoted quote: " + quotes.getQuotes().get(quoteID).getQuote()).queue();
         } else {
             event.getChannel().sendMessage("Could not downvote quote, quoteID does not exist").queue();
         }
@@ -24,16 +25,16 @@ public class DownvoteQuote implements ICommand {
 
     @Override
     public String help() {
-        return null;
+        return "downvotes a quote, usage: !!downvote quoteID";
     }
 
     @Override
     public String category() {
-        return null;
+        return "misc";
     }
 
     @Override
     public String getCommandName() {
-        return null;
+        return "downvote";
     }
 }

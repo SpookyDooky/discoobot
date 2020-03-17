@@ -88,6 +88,12 @@ public class Initializer {
 
         CommandDetails deleteQuoteDetails = new CommandDetails(1,1,false,true,false);
         instance.addCommand(new DeleteQuote(),deleteQuoteDetails);
+
+        CommandDetails upvoteQuoteDetails = new CommandDetails(1,1,false,true,false);
+        instance.addCommand(new UpvoteQuote(),upvoteQuoteDetails);
+
+        CommandDetails downvoteQuoteDetails = new CommandDetails(1,1,false,true,false);
+        instance.addCommand(new DownvoteQuote(),downvoteQuoteDetails);
     }
 
     //Random commands

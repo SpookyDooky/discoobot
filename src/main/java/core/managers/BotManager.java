@@ -16,7 +16,6 @@ import java.util.HashSet;
  * Class for managing the bot, making sure each guild has its own voice manager when necessary
  * Also removes objects that aren't used anymore like if a guild is not using its voice manager we would rather remove it from the memory
  */
-@SuppressWarnings("duplicate")
 public class BotManager {
 
     private static final Logger logger = LoggerFactory.getLogger(BotManager.class);

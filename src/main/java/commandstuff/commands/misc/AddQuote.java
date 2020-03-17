@@ -21,7 +21,7 @@ public class AddQuote implements ICommand {
 
     @Override
     public String help() {
-        return "Adds a quote to guild, usage: !!addquote [quote without quotemarks]";
+        return "Adds a quote to guild, usage: !!addquote ";
     }
 
     @Override
