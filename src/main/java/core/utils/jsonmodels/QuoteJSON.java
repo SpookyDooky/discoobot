@@ -33,4 +33,8 @@ public class QuoteJSON {
     public void upvote(){
         this.upvotes++;
     }
+
+    public void downvote(){
+        this.downvotes++;
+    }
 }

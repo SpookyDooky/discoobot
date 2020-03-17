@@ -16,10 +16,10 @@ public class UpvoteQuote implements ICommand {
         GuildQuotesJSON quotes = BotManager.getInstance().getGuildInfo(guildID).getQuotes();
         boolean success = quotes.upvoteQuote(quoteID);
 
-        if(!success){
-            event.getChannel().sendMessage("Could not upvote quote, quote ID does not exist").queue();
+        if(success){
+            event.getChannel().sendMessage("Successfully upvoted quote: " + quotes.getQuotes().get(quoteID).getQuote()).queue();
         } else {
-            event.getChannel().sendMessage("Succesfully upvoted quote: " + quotes.getQuotes().get(quoteID).getQuote()).queue();
+            event.getChannel().sendMessage("Could not upvote quote, quote ID does not exist").queue();
         }
     }
 
