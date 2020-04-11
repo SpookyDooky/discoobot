@@ -33,7 +33,7 @@ public class DeleteQuote implements ICommand {
 
     @Override
     public String help() {
-        return "Command to delete a quote: !!deletequote [quoteID]";
+        return "Command to delete a quote: !!deletequote quoteID";
     }
 
     @Override

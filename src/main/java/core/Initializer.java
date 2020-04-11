@@ -81,7 +81,7 @@ public class Initializer {
         instance.addCommand(new Choose(),chooseDetails);
 
         CommandDetails getQuoteDetails = new CommandDetails(0,0,false,false,false);
-        instance.addCommand(new GetQuote(),getQuoteDetails);
+        instance.addCommand(new RandomQuote(),getQuoteDetails);
 
         CommandDetails addQuoteDetails = new CommandDetails(1,1,false,true,false);
         instance.addCommand(new AddQuote(),addQuoteDetails);
